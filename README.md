@@ -36,16 +36,20 @@ Finally, in order to startup the application you need to type in the following c
 ```
 npm start
 ```
+Open your favorite web browser and type in:
+```
+htttp://localhost:3000
+```
+And you should see a welcome screen, similar to the one below.
+TODO: Add image of Getting started page.
 ## Deployment
 
 TODO: Build gulpfile for creating a distribution.
 
 ## Authors
 
-* **Nikola Luburiæ** - [Luburic](https://github.com/Luburic)
-* **Milan Stojkov** - [Stolenche](https://github.com/Stolenche)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Nikola Luburiæ** - [GitHub](https://github.com/Luburic) [GitLab](https://gitlab.com/luburic91)
+* **Milan Stojkov** - [GitHub](https://github.com/Stolenche) [GitLab](https://gitlab.com/u/Stolenche)
 
 ## License
 

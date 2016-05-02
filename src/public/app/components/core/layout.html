@@ -1,0 +1,41 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2"
+    md-component-id="left"
+    md-is-locked-open="$mdMedia('gt-md')">
+
+    <header class="nav-header">
+        <a ng-href="#/" class="logo">
+            <img src="./assets/images/logo.png"></img>
+        </a>
+    </header>
+
+    <md-content role="navigation">
+      <ul class="side-menu">
+        <li ng-repeat="section in vm.menu.sections" class="parent-list-item"
+            ng-class="{'parentActive' : vm.isSectionSelected(section)}">
+          <nl-menu-link section="section" ng-if="section.type === 'link'"></nl-menu-link>
+          <nl-menu-toggle section="section" ng-if="section.type === 'toggle'"></nl-menu-toggle>
+        </li>
+      </ul>
+    </md-content>
+</md-sidenav>
+
+<div layout="column" flex role="main">
+    <md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button"
+            aria-label="Menu Button"
+            hide-gt-md
+            ng-click="vm.onClickMenu();">
+            <md-icon
+                md-svg-icon="./assets/images/icons/menu.svg"
+                aria-label="Menu Icon">
+            </md-icon>
+        </md-button>
+
+        <h2>InfoSec Tutor</h2>
+
+        <span flex></span>
+    </div>
+    </md-toolbar>
+    <div ui-view layout="column" layout-padding></div>
+</div>

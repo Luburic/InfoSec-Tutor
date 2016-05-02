@@ -1,0 +1,19 @@
+﻿{
+  "name": "InfoSec-Tutor",
+  "version": "1.0.0",
+  "description": "A learning tool for information security concepts.",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
+  },
+  "repository": "https://gitlab.com/luburic91/InfoSec-Tutor",
+  "author": "Nikola Luburić <nikola.luburic@uns.ac.rs>",
+  "contributors": ["Milan Stojkov <stojkovm@uns.ac.rs>"],
+  "keywords": ["information security", "cryptography", "e-learning", "teaching aid"],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.3",
+    "body-parser": "^1.14.1"
+  }
+}

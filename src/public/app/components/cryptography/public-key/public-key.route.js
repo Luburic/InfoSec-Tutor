@@ -20,10 +20,6 @@
 			.state('main.cryptography.public-key.rsa', {
 				url: '/rsa',
 				templateUrl: 'app/components/cryptography/public-key/public-key-rsa.html'
-			})
-			.state('main.cryptography.public-key.ecc', {
-				url: '/ecc',
-				templateUrl: 'app/components/cryptography/public-key/public-key-ecc.html'
 			});
 	}
 })();

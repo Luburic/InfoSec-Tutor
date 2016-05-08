@@ -51,7 +51,7 @@
                   type: 'link',
               }, {
                   name: 'ECC',
-                  state: 'main.cryptography.public-key.ecc',
+                  state: 'main.cryptography.public-key.ecc.overview',
                   type: 'link',
               }]
           }]

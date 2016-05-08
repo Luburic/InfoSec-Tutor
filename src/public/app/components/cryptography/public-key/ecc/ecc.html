@@ -14,5 +14,15 @@
   		<h3>Demo</h3>
   	</md-tab-label>
   </md-tab>
+  <md-tab ui-sref="main.cryptography.public-key.ecc.review" md-active="$state.includes('main.cryptography.public-key.ecc.review')">
+    <md-tab-label>
+      <h3>Review</h3>
+    </md-tab-label>
+  </md-tab>
+  <md-tab ui-sref="main.cryptography.public-key.ecc.next" md-active="$state.includes('main.cryptography.public-key.ecc.next')">
+    <md-tab-label>
+      <h3>What Next?</h3>
+    </md-tab-label>
+  </md-tab>
 </md-tabs>
-<ui-view></ui-view>
+<div ui-view layout-padding class="gray-background"></div>

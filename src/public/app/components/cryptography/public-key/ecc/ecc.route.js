@@ -24,6 +24,14 @@
 			.state('main.cryptography.public-key.ecc.demo', {
 				url: '/demo',
 				templateUrl: 'app/components/cryptography/public-key/ecc/ecc-demo.html'
+			})
+			.state('main.cryptography.public-key.ecc.review', {
+				url: '/review',
+				templateUrl: 'app/components/cryptography/public-key/ecc/ecc-review.html'
+			})
+			.state('main.cryptography.public-key.ecc.next', {
+				url: '/next',
+				templateUrl: 'app/components/cryptography/public-key/ecc/ecc-next.html'
 			});
 	}
 })();

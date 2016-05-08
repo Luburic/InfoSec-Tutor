@@ -8,14 +8,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisities
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
 In order to run InfoSec Tutor you need to have the following things installed
 
 ```
@@ -27,7 +19,10 @@ Once you install node you can install bower by typing the following command insi
 ```
 npm install bower -g
 ```
-The last thing you need to do is install the dependencies for both the server and client application by typing the following commands inside the InfoSec Tutor root folder:
+
+### Installing
+
+You need to do is install the dependencies for both the server and client application by typing the following commands inside the InfoSec Tutor root folder:
 ```
 npm install
 bower install
@@ -48,7 +43,7 @@ TODO: Build gulpfile for creating a distribution.
 
 ## Authors
 
-* **Nikola Luburiæ** - [GitHub](https://github.com/Luburic) [GitLab](https://gitlab.com/luburic91)
+* **Nikola Luburic** - [GitHub](https://github.com/Luburic) [GitLab](https://gitlab.com/luburic91)
 * **Milan Stojkov** - [GitHub](https://github.com/Stolenche) [GitLab](https://gitlab.com/u/Stolenche)
 
 ## License

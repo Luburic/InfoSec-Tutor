@@ -1,6 +1,6 @@
 <md-sidenav class="md-sidenav-left md-whiteframe-z2"
     md-component-id="left"
-    md-is-locked-open="$mdMedia('gt-md')">
+    md-is-locked-open="$mdMedia('gt-sm')">
 
     <header class="nav-header">
         <a ng-href="#/" class="logo">
@@ -8,7 +8,7 @@
         </a>
     </header>
 
-    <md-content role="navigation">
+    <md-content>
       <ul class="side-menu">
         <li ng-repeat="section in vm.menu.sections" class="parent-list-item"
             ng-class="{'parentActive' : vm.isSectionSelected(section)}">
@@ -19,12 +19,12 @@
     </md-content>
 </md-sidenav>
 
-<div layout="column" flex role="main">
+<div layout="column" flex>
     <md-toolbar>
     <div class="md-toolbar-tools">
         <md-button class="md-icon-button"
             aria-label="Menu Button"
-            hide-gt-md
+            hide-gt-sm
             ng-click="vm.onClickMenu();">
             <md-icon
                 md-svg-icon="./assets/images/icons/menu.svg"
@@ -37,5 +37,7 @@
         <span flex></span>
     </div>
     </md-toolbar>
-    <div ui-view layout="column" layout-padding></div>
+    <div style="overflow: auto;">
+        <div ui-view layout="column"></div>
+    </div>
 </div>

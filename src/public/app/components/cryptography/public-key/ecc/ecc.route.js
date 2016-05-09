@@ -17,6 +17,10 @@
 				url: '/overview',
 				templateUrl: 'app/components/cryptography/public-key/ecc/ecc-overview.html'
 			})
+			.state('main.cryptography.public-key.ecc.algorithm', {
+				url: '/algorithm',
+				templateUrl: 'app/components/cryptography/public-key/ecc/ecc-algorithm.html'
+			})
 			.state('main.cryptography.public-key.ecc.elliptic-curves', {
 				url: '/elliptic-curves',
 				templateUrl: 'app/components/cryptography/public-key/ecc/ecc-elliptic-curves.html'

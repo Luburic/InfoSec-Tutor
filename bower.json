@@ -1,8 +1,8 @@
-﻿{
+{
   "name": "InfoSec-Tutor",
   "version": "1.0.0",
   "authors": [
-    "Nikola Luburić <nikola.luburic@uns.ac.rs>",
+    "Nikola Luburic <nikola.luburic@uns.ac.rs>",
     "Milan Stojkov <stojkovm@uns.ac.rs>"
   ],
   "repository": "https://gitlab.com/luburic91/InfoSec-Tutor",
@@ -21,6 +21,7 @@
     "angular-aria": "^1.5.5",
     "angular-material": "^1.0.8",
     "angular-ui-router": "^0.2.18",
-    "angular-material-sidenav": "^0.0.13"
+    "angular-material-sidenav": "^0.0.13",
+    "MathJax": "^2.6.1"
   }
 }

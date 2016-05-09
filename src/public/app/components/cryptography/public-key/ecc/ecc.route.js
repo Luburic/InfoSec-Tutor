@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular
-		.module('infosec-tutor.cryptography.public-key')
+		.module('infosec-tutor.cryptography.public-key.ecc')
 		.config(config);
 
 	config.$inject = ['$stateProvider'];

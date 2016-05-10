@@ -1,1 +1,30 @@
-ecc-elliptic-curves
+<p>
+	Why hello there, friend. I've been dying to tell someone about this weird thing which seems to do wonders in the crypto world, namely elliptic curves. Oh, but I won't stop there. I plan to define some cyclic subgroups over these curves, and to restrict them to a finite field. Yes, you heard me right, finite field. Sounds weird, doesn't it? Well, let's get going.
+</p>
+<p>
+	Ok, so, what exactly are elliptic curves? Well, put simply, an elliptic curve is a set of points described by the equation:
+</p>
+<div layout="row">
+	<span flex-offset="40" class="center-text"><it-math>$y^2 = x^3 + ax + b$</it-math></span><span class="right-text" flex>(ECC A 1)</span>
+</div>
+<p>
+	where <it-math>$4a^3 + 27b^2 \ne 0$</it-math>, in order to avoid singular curves. What are singular curves you might ask, well, apparently, they are elliptic curves where <it-math>$4a^3 + 27b^2 = 0$</it-math>. Not funny? No, it's not. That being said, in mathematics a singularity is in general a point at which a given mathematical object is not defined, or a point of an exceptional set where it fails to be well-behaved in some particular way. Take dividing by zero as an example. In short, singular curves are bad, m'kay?
+</p>
+<p>
+	"Wait a minute HTML page, that elliptic curve definition is too simple to be math, isn't it?"<br>
+	I'm glad you asked, fellow student. It is, isn't it. Fortunately, <a href="http://mathworld.wolfram.com/EllipticCurve.html" target="_blank">the eggheads over at Wolfram have a much more complicated (and more accurate) definition</a>. However, for our understanding of ECC, <i>a set of points described by the equation ECC A 1</i> will suffice. Let's take a look at some pictures at fig. 1.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/ecc/ec.png">
+			<figcaption>Fig. 1 Elliptic curves with various <it-math>$a$</it-math> and <it-math>$b$</it-math> values. Can you spot the singularity?</figcaption>
+		</figure>
+	</span>
+</div>
+<p>
+	Depending on the values of the domain parameters (<it-math>$a, b$</it-math>) the elliptic curves assume different shapes on the plane as can be seen above. By the way, did you notice the symmetry about the <it-math>$x$</it-math>-axis? This, of course, is no surprise, as <it-math>$y$</it-math> in ECC A 1 is squared. Now, we also need a point at infinity, which we'll denote as 0 (zero), to be part of our curve. Taking all of this into account we can refine our definition of elliptic curves as follows:
+</p>
+<div layout="row">
+	<span flex-offset="30" class="center-text"><it-math>$\left\{ (x, y) \in \mathbb{R}^2\ |\ y^2 = x^3 + ax + b,\ 4 a^3 + 27 b^2 \ne 0 \right\}\ \cup\ \left\{ 0 \right\}$</it-math></span><span class="right-text" flex>(ECC A 2)</span>
+</div>

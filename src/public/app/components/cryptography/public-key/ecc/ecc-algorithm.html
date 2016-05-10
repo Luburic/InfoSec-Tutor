@@ -2,13 +2,5 @@
 	So, let's talk algorithms.
 </p>
 <p>
-	Well... not so fast. In order to explain how the two most popular algorithms based on elliptic curves work, we need to take a step back and briefly discuss elliptic curves and how we can utilize them to encrypt our private messages and digitally sign them. Keep in mind that I’ll do a very brief overview of the math here, while a more extensive explanation can be found on the <a ui-sref="main.cryptography.public-key.ecc.elliptic-curves">Elliptic Curves</a> subsection.
+	Well... not so fast. In order to understand how the two most popular algorithms based on elliptic curves work, we need to take a step back and examine the elliptic curves themselves and how we can utilize them to encrypt our private messages and digitally sign them. If you already know what elliptic curves are, and can understand the phrase "<i>Cyclic subgroup of an elliptic curve defined over a finite field</i>" than by all means go on right ahead, but otherwise be sure to check out the <a ui-sref="main.cryptography.public-key.ecc.elliptic-curves">Elliptic Curves</a> subsection. No, really, <em>go read the Elliptic Curves subsection</em>, you can't understand the algorithm without the math. I promise it won't hurt.
 </p>
-<h3>Elliptic curves – a brief overview</h3>
-<p>
-	Ok, so, what exactly are elliptic curves? Well, put simply, an elliptic curve is a set of points described by the equation:
-</p>
-<div layout="row">
-	<span flex-offset="33" flex="33" class="center-text"><it-math>$y^2 = x^3 + ax + b$</it-math></span>
-	<span class="right-text" flex="34">(ECC A 1)</span>
-</div>

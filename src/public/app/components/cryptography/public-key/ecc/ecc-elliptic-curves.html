@@ -28,3 +28,26 @@
 <div layout="row">
 	<span flex-offset="30" class="center-text"><it-math>$\left\{ (x, y) \in \mathbb{R}^2\ |\ y^2 = x^3 + ax + b,\ 4 a^3 + 27 b^2 \ne 0 \right\}\ \cup\ \left\{ 0 \right\}$</it-math></span><span class="right-text" flex>(ECC A 2)</span>
 </div>
+<h3>Groups</h3>
+<p>
+	Next we need to define a group over elliptic curves. But in order to do that we need to get up to speed with groups in algebra.<br>
+	In mathematics, a group <it-math>$(\mathbb{A}, \cdot)$</it-math> is a set, G, together with an opeartion that combines any two elements to form a third element. The symbol <it-math>$\cdot$</it-math> is a general placeholder for a concretely given operation. The operation needs to satisfy four requirements (axioms):
+	<ol flex-offset="10">
+		<li><b>closure</b> - if <it-math>$a$</it-math> and <it-math>$b$</it-math> are members of <it-math>$\mathbb{G}$</it-math>, then <it-math>$a \cdot b$</it-math> is a member of <it-math>$\mathbb{G}$</it-math>;</li>
+		<li><b>associativity</b> - <it-math>$(a \cdot b) \cdot c = a \cdot (b \cdot c)$</it-math>;</li>
+		<li><b>identity</b> - there exists an identity elemnet 0 such that <it-math>$a \cdot 0 = 0 \cdot a = a$</it-math>;</li>
+		<li><b>invertability</b> - for every <it-math>$a$</it-math> there exists <it-math>$b$</it-math> such that <it-math>$a \cdot b = 0$</it-math>.</li>
+	</ol>
+	A special case of a group is called the <i>abelian group</i> and it adds a fifth requirement to the group operation:
+	<ol start="5" flex-offset="10">
+		<li><b>commutativity</b> - <it-math>$a \cdot b = b \cdot a$</it-math>;</li>
+	</ol>
+	Now, let's make sure you and I are on the same page by examining an example group: <it-math>$\mathbb{G} = (\mathbb{Z}, +)$</it-math>, the set of integers under addition. Now, I could give you a formal proof where we can go on to say that the group .
+</p>
+
+	<ul flex-offset="10">
+		<li>the elements of the group are the points of an elliptic curve;</li>
+		<li>the identity element is the point at infinity (0);</li>
+		<li>the inverse of a point <it-math>$P$</it-math> is the one symmetric about the <it-math>$x$</it-math>-axis;</li>
+		<li>addition is given by the following rule: given three aligned, non-zero points P, Q, and R, their sum is P + Q + R = 0;</li>
+	</ul>

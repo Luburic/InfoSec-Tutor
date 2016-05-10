@@ -9,7 +9,7 @@
 			return {
 				restrict: 'E',
 				link: function(scope, element, attrs) {
-						MathJax.Hub.Queue(['Typeset', MathJax.Hub, element[0]]);
+					katex.render(element[0].firstChild.data, element[0]);
 				}
 			};
 		}

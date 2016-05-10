@@ -255,5 +255,23 @@
 	<li>the smallest <it-math>n</it-math> such that <it-math>nP = 0</it-math> is the order of the subgroup.</li>
 </ol>
 <p>
-	The final piece of the final piece of the puzzle that is ECC is: how do we choose a base point? Well, before we go any further we need to define one more thing, and that is the cofactor of the subgroup, <it-math>h = N/n</it-math>. Why is this important? Consider that for every point of an elliptic curve we have <it-math>NP = 0</it-math>, and using <it-math>h</it-math> we can write:
+	The final piece of the final piece of the puzzle that is ECC is: how do we choose a base point? For our ECC algorithms we want subgroups with a high order. This is to say that we'll first choose a suitable order and then calculate the base point, but how will we do that? Well, before we go any further we need to define one more thing, and that is the cofactor of the subgroup, <it-math>h = N/n</it-math>. Why is this important? Consider that for every point of an elliptic curve we have <it-math>NP = 0</it-math>, and using <it-math>h</it-math> we can write: <it-math>n(hP) = 0</it-math>. If <it-math>n</it-math> is a large enough prime number we have found our base point <it-math>G = hP</it-math> (unless <it-math>G = hP = 0</it-math>, in which case the subgroup has order 1). So, let's define our algorithm:
+</p>
+<ol flex-offset="5">
+	<li>calculate the elliptic curve's order <it-math>N</it-math> using Schoof's algorithm;</li>
+	<li>find out all the divisors of <it-math>N</it-math> and choose a prime <it-math>n</it-math>;</li>
+	<li>compute the cofactor <it-math>h = N/n</it-math>;</li>
+	<li>choose a random point <it-math>P</it-math> on the curve;</li>
+	<li>compute <it-math>G = hP</it-math>;</li>
+	<li>if <it-math>G = 0</it-math> go to step 4, otherwise we have our base point.</li>
+</ol>
+<p>
+	Well, it was a bumpy ride if I do say so myself. I'm tired. Yes, even HTML pages need sleep. Well, let's wrap everything up so that I can get some shut eye.
+</p>
+<h3>The discrete logarithm problem</h3>
+<p>
+	If we know <it-math>P</it-math> and <it-math>Q</it-math>, what is <it-math>k</it-math>, such that <it-math>Q = kP</it-math>? This is what we were building up to. The discrete logarithm problem for elliptic curves. This is believed to be a hard problem to solve computationaly, and this is why ECC algorithms are secure under the right circumstances. What the right circumstances are, as well as what the algorithms are, you can find in the Algorithm subsection. The biggest problem with the discrete logarithm problem is that we don't have any actual proof that the problem is hard, but at the moment we can't solve it without a lot of computer power and time.
+</p>
+<p>
+	It's been a pleasure friend. If you made it this far you deserve a pat on the back. Since I can't pat you I suggest you do it yourself. Go on. Good. Alrighty then, see you on another part of the InfoSec Tutor app. Cheers!
 </p>

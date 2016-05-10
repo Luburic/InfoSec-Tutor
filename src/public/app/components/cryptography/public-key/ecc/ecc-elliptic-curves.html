@@ -1,18 +1,19 @@
 <p>
 	Why hello there, friend. I've been dying to tell someone about this weird thing which seems to do wonders in the crypto world, namely elliptic curves. Oh, but I won't stop there. I plan to define some cyclic subgroups over these curves, and to restrict them to a finite field. Yes, you heard me right, finite field. Sounds weird, doesn't it? Well, let's get going.
 </p>
+<h3>Elliptic Curves</h3>
 <p>
 	Ok, so, what exactly are elliptic curves? Well, put simply, an elliptic curve is a set of points described by the equation:
 </p>
 <div layout="row">
-	<span flex-offset="40" class="center-text"><it-math>y^2 = x^3 + ax + b</it-math></span><span class="right-text" flex>(ECC A 1)</span>
+	<span flex-offset="40" class="center-text"><it-math>y^2 = x^3 + ax + b</it-math></span><span class="right-text" flex>(ECC M 1)</span>
 </div>
 <p>
 	where <it-math>4a^3 + 27b^2 \ne 0</it-math>, in order to avoid singular curves. What are singular curves you might ask, well, apparently, they are elliptic curves where <it-math>4a^3 + 27b^2 = 0</it-math>. Not funny? No, it's not. That being said, in mathematics a singularity is in general a point at which a given mathematical object is not defined, or a point of an exceptional set where it fails to be well-behaved in some particular way. Take dividing by zero as an example. In short, singular curves are bad, m'kay?
 </p>
 <p>
 	"Wait a minute HTML page, that elliptic curve definition is too simple to be math, isn't it?"<br>
-	I'm glad you asked, fellow student. It is, isn't it. Fortunately, <a href="http://mathworld.wolfram.com/EllipticCurve.html" target="_blank">the eggheads over at Wolfram have a much more complicated (and more accurate) definition</a>. However, for our understanding of ECC, <i>a set of points described by the equation ECC A 1</i> will suffice. Let's take a look at some pictures at fig. 1.
+	I'm glad you asked, fellow student. It is, isn't it. Fortunately, <a href="http://mathworld.wolfram.com/EllipticCurve.html" target="_blank">the eggheads over at Wolfram have a much more complicated (and more accurate) definition</a>. However, for our understanding of ECC, <i>a set of points described by the equation ECC M 1</i> will suffice. Let's take a look at some pictures at fig. 1.
 </p>
 <div layout="row">
 	<span flex class="center-text">
@@ -23,31 +24,236 @@
 	</span>
 </div>
 <p>
-	Depending on the values of the domain parameters (<it-math>a, b</it-math>) the elliptic curves assume different shapes on the plane as can be seen above. By the way, did you notice the symmetry about the <it-math>x</it-math>-axis? This, of course, is no surprise, as <it-math>y</it-math> in ECC A 1 is squared. Now, we also need a point at infinity, which we'll denote as 0 (zero), to be part of our curve. Taking all of this into account we can refine our definition of elliptic curves as follows:
+	Depending on the values of the domain parameters (<it-math>a, b</it-math>) the elliptic curves assume different shapes on the plane as can be seen above. By the way, did you notice the symmetry about the <it-math>x</it-math>-axis? This, of course, is no surprise, as <it-math>y</it-math> in ECC M 1 is squared. Now, we also need a point at infinity, which we'll denote as 0 (zero), to be part of our curve. Taking all of this into account we can refine our definition of elliptic curves as follows:
 </p>
 <div layout="row">
-	<span flex-offset="30" class="center-text"><it-math>\left\{ (x, y) \in \mathbb{R}^2\ |\ y^2 = x^3 + ax + b,\ 4 a^3 + 27 b^2 \ne 0 \right\}\ \cup\ \left\{ 0 \right\}</it-math></span><span class="right-text" flex>(ECC A 2)</span>
+	<span flex-offset="30" class="center-text"><it-math>\left\{ (x, y) \in \mathbb{R}^2\ |\ y^2 = x^3 + ax + b,\ 4 a^3 + 27 b^2 \ne 0 \right\}\ \cup\ \left\{ 0 \right\}</it-math></span><span class="right-text" flex>(ECC M 2)</span>
 </div>
 <h3>Groups</h3>
 <p>
 	Next we need to define a group over elliptic curves. But in order to do that we need to get up to speed with groups in algebra.<br>
 	In mathematics, a group <it-math>(\mathbb{A}, \cdot)</it-math> is a set, G, together with an opeartion that combines any two elements to form a third element. The symbol <it-math>\cdot</it-math> is a general placeholder for a concretely given operation. The operation needs to satisfy four requirements (axioms):
-	<ol flex-offset="10">
-		<li><b>closure</b> - if <it-math>a</it-math> and <it-math>b</it-math> are members of <it-math>\mathbb{G}</it-math>, then <it-math>a \cdot b</it-math> is a member of <it-math>\mathbb{G}</it-math>;</li>
-		<li><b>associativity</b> - <it-math>(a \cdot b) \cdot c = a \cdot (b \cdot c)</it-math>;</li>
-		<li><b>identity</b> - there exists an identity elemnet 0 such that <it-math>a \cdot 0 = 0 \cdot a = a</it-math>;</li>
-		<li><b>invertability</b> - for every <it-math>a</it-math> there exists <it-math>b</it-math> such that <it-math>a \cdot b = 0</it-math>.</li>
-	</ol>
-	A special case of a group is called the <i>abelian group</i> and it adds a fifth requirement to the group operation:
-	<ol start="5" flex-offset="10">
-		<li><b>commutativity</b> - <it-math>a \cdot b = b \cdot a</it-math>;</li>
-	</ol>
-	Now, let's make sure you and I are on the same page by examining an example group, the set of integers under addition: <it-math>(\mathbb{Z}, +)</it-math><br>Now, I could give you a formal proof where we can go on to say that the group .
 </p>
-
-	<ul flex-offset="10">
-		<li>the elements of the group are the points of an elliptic curve;</li>
-		<li>the identity element is the point at infinity (0);</li>
-		<li>the inverse of a point <it-math>P</it-math> is the one symmetric about the <it-math>x</it-math>-axis;</li>
-		<li>addition is given by the following rule: given three aligned, non-zero points P, Q, and R, their sum is P + Q + R = 0;</li>
-	</ul>
+<ol flex-offset="5">
+	<li><b>closure</b> - if <it-math>a</it-math> and <it-math>b</it-math> are members of <it-math>\mathbb{G}</it-math>, then <it-math>a \cdot b</it-math> is a member of <it-math>\mathbb{G}</it-math>;</li>
+	<li><b>associativity</b> - <it-math>(a \cdot b) \cdot c = a \cdot (b \cdot c)</it-math>;</li>
+	<li><b>identity</b> - there exists an identity elemnet 0 such that <it-math>a \cdot 0 = 0 \cdot a = a</it-math>;</li>
+	<li><b>invertability</b> - for every <it-math>a</it-math> there exists <it-math>b</it-math> such that <it-math>a \cdot b = 0</it-math>.</li>
+</ol>
+<p>
+	A special case of a group is called the <i>abelian group</i> and it adds a fifth requirement to the group operation:
+</p>
+<ol start="5" flex-offset="5">
+	<li><b>commutativity</b> - <it-math>a \cdot b = b \cdot a</it-math>.</li>
+</ol>
+<p>
+	Now, let's make sure you and I are on the same page by examining an example group, the set of real numbers under addition: <it-math>(\mathbb{R}, +)</it-math>
+</p>
+<ol flex-offset="5">
+	<li>The real numbers are closed under addition as for all <it-math>a, b \in \mathbb{R}, a + b \in \mathbb{R}</it-math>;</li>
+	<li>Addition on the real numbers is associative, since for all <it-math>a, b, c \in \mathbb{R}, (a + b) + c = a + (b + c)</it-math>;</li>
+	<li>The identity element is 0, since for every <it-math>t \in \mathbb{R}, t + 0 = 0 + t = t</it-math>;</li>
+	<li>The inverse of <it-math>t</it-math> is <it-math>-t</it-math> for all <it-math>t \in \mathbb{R}, t + (-t) = (-t) + t = 0</it-math>;</li>
+	<li>Addition of real numbers is commutative, since for all <it-math>a, b \in \mathbb{R}, a + b = b + a</it-math>.</li>
+</ol>
+<p>
+	So not only is <it-math>(\mathbb{R}, +)</it-math> a group, it is also an abelian group. Now, you might be thinking "Well, HTML page, I understand what groups are, but why are they relevant for elliptic curves, or better yet, what does any of this have to do with crypto?" and I say to you "Be patient, young padawan". You see, groups are nice because if we can demonstrate that the group operation fulfills the four main constraints then we get certain guarantees, for example that the identity element is unique and that each element has a unique inverse. So, how does this connect to elliptic curves? Well...
+</p>
+<h3>Groups defined over elliptic curves</h3>
+<p>
+	Let's define a group <it-math>(E, +)</it-math>, where <it-math>E</it-math> is the set of points of an elliptic curve and +, called addition, is defined by the following rule: given three aligned, non zero points <it-math>P, Q</it-math> and <it-math>R</it-math>, their sum is <it-math>P + Q + R = 0</it-math>. Let's examine how this group is an abelian group:
+</p>
+<ul flex-offset="5">
+	<li>the elements of the group are the points of an elliptic curve;</li>
+	<li>since the points are aligned without respect to order <it-math>(P + Q) + R = P + (Q + R)</it-math>;</li>
+	<li>the identity element is the point at infinity 0;</li>
+	<li>the inverse of a point <it-math>P</it-math> is the one symmetric about the <it-math>x</it-math>-axis;</li>
+	<li>since the points are aligned without respect to order <it-math>P + Q + R = R + P + Q = 0</it-math>.</li>
+</ul>
+<p>
+	In order to get a better idea about our addition operation take a look at fig. 2.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/ecc/ec-addition.png">
+			<figcaption>Fig. 2 Addition operation of our <it-math>(E, +)</it-math> group. Notice how we calculate <it-math>P + Q + R</it-math></figcaption>
+		</figure>
+	</span>
+</div>
+<h4>Geometric method for point addition</h4>
+<p>
+	It's time to take a look at how we can calculate the addition of two points. As displayed above, the simplest method is to rely on geometry: if we draw a line passing through <it-math>P</it-math> and <it-math>Q</it-math> the line will interesect a third point <it-math>R</it-math>. If we take the inverse of this point <it-math>-R</it-math>, we have found the result of <it-math>P + Q</it-math>.
+</p>
+<p>
+	Now, while this geometric method works, we need to take into account special cases, presented on fig. 3:
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/ecc/ec-special.png">
+			<figcaption>Fig. 3 Elliptic curve examples with special cases</figcaption>
+		</figure>
+	</span>
+</div>
+<ul flex-offset="5">
+	<li><it-math>P \ne Q</it-math> but there is no third point - in this case the line passing through <it-math>P</it-math> and <it-math>Q</it-math> is a tangent to the curve at either point <it-math>P</it-math> or <it-math>Q</it-math>. In that case the third point is the inverse of the point where the tangent touches the curve (fig. 3 (2));</li>
+	<li><it-math>P = -Q</it-math> - since we define <it-math>P</it-math> as an inverse of <it-math>Q</it-math> we get <it-math>-Q + Q = 0</it-math> (fig. 3 (3, 4));</li>
+	<li><it-math>P = Q</it-math> - in this case the line passing through <it-math>P</it-math> is a tangent to the curve at point <it-math>P</it-math> and we get a similar result as the above bullet;</li>
+	<li><it-math>P = 0 || Q = 0</it-math> - since 0 is the identity element (and is part of the curve as defined in ECC M 2) we get that <it-math>P + 0 = P || 0 + Q = Q</it-math> for any <it-math>P</it-math> and <it-math>Q</it-math> (fig. 3 (4)).</li>
+</ul>
+<p>
+	You wanted math, you got it. But really, what was the point of the previous section? Well, we defined geometric addition, and we needed to cover all the corner cases. Using a pencil and a ruler you can now calculate the result of addition defined above of any two points on the curve. Fun, right? Well, how could you know, you haven't even <a href="https://cdn.rawgit.com/andreacorbellini/ecc/920b29a/interactive/reals-add.html" target="_blank">tried it out...</a><!--TODO: Integrate the tool with our system-->
+</p>
+<p>
+	Well, while it's fun (I do it every friday night), you can't really make computers do efficient geometric addition. Now you might be thinking "Wait a minute HTML page, aren't you based on a computer system?" and while most HTML pages are reliant on computer systems I am no such case. But that's a story for another time.
+</p>
+<h4>Algebraic method for point addition</h4>
+<p>
+	In order for a computer to perform point addition, we need to define an algebraic method. For simplicity I will ommit the following two corner cases:
+</p>
+<ul flex-offset="5">
+	<li><it-math>P + (-P) = 0</it-math>;</li>
+	<li><it-math>P + 0 = 0 + P = P</it-math>.</li>
+</ul>
+<p>
+	We only consider two non-zero, non-symmetric points <it-math>P = (x_P,y_P)</it-math> and <it-math>Q = (x_Q,y_Q)</it-math>. If <it-math>P \ne Q</it-math> the line through them has a slope <it-math>m</it-math> defined as:
+</p>
+<div layout="row">
+	<span flex-offset="35" class="center-text"><it-math>m = \frac{y_P - y_Q}{x_P - x_Q}</it-math></span><span class="right-text" flex>(ECC M 3)</span>
+</div>
+<p>
+	The intersection of this line with the elliptic curve is a third point <it-math>R = (x_R, y_R)</it-math>, where:
+</p>
+<div layout="row" id="test">
+	<span flex-offset="30" class="center-text"><it-math>\begin{array}{rcl}x_R & = & m^2 - x_P - x_Q \\y_R & = & y_P + m(x_R - x_P)\end{array}</it-math></span><span class="right-text" flex>(ECC M 4)</span>
+</div>
+<p>
+	Let's examine the math we have covered so far and test it out. Looking at the <a href="https://cdn.rawgit.com/andreacorbellini/ecc/920b29a/interactive/reals-add.html?px=1&py=2&qx=3&qy=4" tagert="_blank">interactive tool for elliptic curves</a> we can see that that for points <it-math>P = (1, 2), Q = (3, 4)</it-math> the third point is <it-math>-R = P + Q, R = (-3, 2)</it-math>. The tool is calculating using the algebraic method, but you and I can simply look at the drawing and use the geometric method. But let's see if our equations ECC M 3 and ECC M 4 really hold up.
+</p>
+<div layout="row">
+	<span flex-offset="30" class="center-text"><it-math>
+		\begin{array}{rcl}
+		    m & = & \frac{y_P - y_Q}{x_P - x_Q} = \frac{2 - 4}{1 - 3} = 1 \\
+		    x_R & = & m^2 - x_P - x_Q = 1^2 - 1 - 3 = -3 \\
+		    y_R & = & y_P + m(x_R - x_P) = 2 + 1 \cdot (-3 - 1) = -2 \\
+		    & = & y_Q + m(x_R - x_Q) = 4 + 1 \cdot (-3 - 3) = -2
+		\end{array}
+	</it-math></span>
+</div>
+<p>
+	Note that we calculate the inverse of <it-math>R (-R)</it-math>. We need to cover one more case, when <it-math>P = Q</it-math>. While the equations for <it-math>x_R</it-math> and <it-math>y_R</it-math> stay the same, we must use a different equation for the slope:
+</p>
+<div layout="row">
+	<span flex-offset="35" class="center-text"><it-math>m = \frac{3 x_P^2 + a}{2 y_P}</it-math></span><span class="right-text" flex>(ECC M 5)</span>
+</div>
+<p>
+	Fun fact - the expression for the slope is the first derivative of <it-math>y_P = \pm \sqrt{x_P^3 + ax_P + b}</it-math>, which is to be expected if we consider that we are dealing with a line that's a tangent to the curve.
+</p>
+<h4>Scalar multiplication of points</h4>
+<p>
+	At this point you are probably thinking "When will it end?!" and I sympathize. Heck, I've still to mention finite fields. The thing is, in order to understand the underlying security of ECC algorithms we need to learn several puzzle pieces which we can then paste together.
+</p>
+<p>
+	The next puzzle piece is scalar multiplication, which we define as <it-math>nP = P + P + \cdots + P</it-math>, for every <it-math>n \in \mathbb{N}</it-math>. Written in this form, we can see that in order to compute <it-math>nP</it-math> we need to do <it-math>n</it-math> additions. What if I told you that there exists an algorithm that can do this much faster?
+</p>
+<p>
+	Let's discuss the double and add algorithm. Better yet, let me show you how it works:
+</p>
+<div layout="row">
+	<span flex-offset="25" class="center-text"><it-math>
+		\begin{array}{rcl}
+		    220P & = & 11011100_2 \cdot P \\
+		    	 & = & (1 \cdot 2^7 + 1 \cdot 2^6 + 0 \cdot 2^5 + 1 \cdot 2^4 + 1 \cdot 2^3 + 1 \cdot 2^2 + 0 \cdot 2^1 + 0 \cdot 2^0) \cdot P \\
+    			 & = & (2^7 + 2^6 + 2^4 + 2^3 + 2^2) \cdot P \\
+		    	 & = & 2^7P + 2^6P + 2^4P + 2^3P + 2^2P
+		\end{array}
+	</it-math>
+</div>
+<p>
+	What happened here? Well, remember the ECC M 4 and ECC M 5 equations, where we defined how to calculate <it-math>P + Q</it-math> and <it-math>2P</it-math>, respectively? Well, as it turns out, we can use this to make a much more efficient algorithm than simply add <it-math>P n</it-math> times. We do the following:
+</p>
+<ol flex-offset="5">
+	<li>take point <it-math>P</it-math> and scalar <it-math>n</it-math>;</li>
+	<li>take first bit of scalar <it-math>n</it-math>, set result to 0, set current number to <it-math>P</it-math>;</li>
+	<li>if bit is equal to 1 add current number to result (ECC M 4);</li>
+	<li>double current number (ECC M 5);</li>
+	<li>take next bit of scalar <it-math>n</it-math> and go to step 3. Repeat until scalar <it-math>n</it-math> is depleted of bits.</li>
+</ol>
+<p>
+	So there you have it. Instead of 220 additions we managed to do 5 additions and 7 multiplications, a total of 12 operations. So what's the story here? Well, given <it-math>n</it-math> and <it-math>P</it-math> we have a polynomial time algorithm for computing <it-math>Q = nP</it-math>, but what about the other way around? Given <it-math>Q</it-math> and <it-math>P</it-math>, how do we find <it-math>n</it-math>? This problem is known as the logarithm problem, and while it isn't very hard to solve it we can use it as a basis for something that is hard to solve - the discrete logarithm problem. I will show you the world... eh, the key to ECC security, but first we need one final piece of the puzzle - to restrict our elliptic curves to finite fields.
+</p>
+<h3>Finite field of integers</h3>
+<p>
+	The last concept we need to define is a finite field. Before talking about finite fields let me remind you what a field is. A field <it-math>(F, +, \cdot)</it-math> is a set <it-math>F</it-math> that is an abelian group with respect to two compatible operations, addition and multiplication, such that the following axioms hold:
+</p>
+<ol flex-offset="5">
+	<li><b>clojure</b> - for all <it-math>a</it-math> and <it-math>b</it-math> in <it-math>F</it-math>, both <it-math>a + b</it-math> and <it-math>a \cdot b</it-math> are in <it-math>F</it-math>;</li>
+	<li><b>associativity</b> - for all <it-math>a, b</it-math> and <it-math>c</it-math> in <it-math>F</it-math>, the following equalities hold: <it-math>(a + b) + c = a + (b + c), (a \cdot b) \cdot c = a \cdot (b \cdot c)</it-math>;</li>
+	<li><b>commutativity</b> - for all <it-math>a</it-math> and <it-math>b</it-math> in <it-math>F</it-math>, the following equalities hold: <it-math>a + b = b + a, a \cdot b = b \cdot a</it-math>;</li>
+	<li><b>identity</b> - there exists an element of <it-math>F</it-math>, called the additive identity and denoted by 0, such that for all <it-math>a \in F, a + 0 = a</it-math>. Likewise, there is an element, called the multiplicative identity element and denoted by 1, such that for all <it-math>a \in F, a \cdot 1 = a</it-math>. To exclude the zero ring <it-math>({0}, +, \cdot)</it-math>, the additive and multiplicative identity need to be distinct;</li>
+	<li><b>invertability</b> - for every <it-math>a</it-math> in <it-math>F</it-math>, there exists an element <it-math>-a</it-math> in <it-math>F</it-math>, such that <it-math>a + (-a) = 0</it-math>. Similarly, for any <it-math>a</it-math> in <it-math>F</it-math> other than 0 there exists an element <it-math>a^{-1}</it-math> in <it-math>F</it-math>, such that <it-math>a \cdot a^{-1} = 1</it-math>;</li>
+	<li><b>distributivity</b> - for all <it-math>a, b</it-math> and <it-math>c</it-math> in <it-math>F</it-math>, the following equality holds: <it-math>a \cdot (b + c) = (a \cdot b) + (a \cdot c)</it-math>.
+</ol>
+<p>
+	Most of the above axioms should be familiar. We can see that a field consists of two abelian groups, <it-math>F</it-math> under + and <it-math>F\setminus\left\{0\right\}</it-math> under <it-math>\cdot</it-math>, with <it-math>\cdot</it-math> distributing over +.
+</p>
+<p>
+	The last piece of the puzzle is the finite field, which are fields with finitely many elements. An example of such a field would be a set of integers modulo <it-math>p</it-math>, where <it-math>p</it-math> is a prime number. We will denote this field with <it-math>\mathbb{F}_p</it-math>. This set consists of integers from 0 to <it-math>p</it-math> - 1.
+</p>
+<h3>Elliptic curves in <it-math>\mathbb{F}_p</it-math></h3>
+<p>
+	Let's restrict our elliptic curves over <it-math>\mathbb{F}_p</it-math>. The equation ECC M 2 now becomes:
+</p>
+<div layout="row">
+	<span flex-offset="35" class="center-text"><it-math>
+		\begin{array}{rcl}
+		  \left\{(x, y) \in (\mathbb{F}_p)^2 \right. & \left. | \right. & \left. y^2 \equiv x^3 + ax + b\,(mod\, p), \right. \\
+		  & & \left. 4a^3 + 27b^2 \ne 0\, (mod\, p)\right\}\ \cup\ \left\{0\right\}
+		\end{array}
+	</it-math></span><span class="right-text" flex>(ECC M 6)</span>
+</div>
+<p>
+	We could go on to prove that elliptic curves restricted to <it-math>\mathbb{F}</it-math> still form an abelian group, but instead we'll look at some pictures, namely fig. 4 where we can see some examples of elliptic curves of a finite field.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/ecc/ec-finite.png">
+			<figcaption>Fig. 4 An elliptic curve <it-math>y^2 \equiv x^3 - 7x + 10\,(mod\, p)</it-math>, with <it-math>p = 19, 97, 127, 487</it-math>. Note the symmetry in the point distribution.</figcaption>
+		</figure>
+	</span>
+</div>
+<p>
+	There. Now wasn't that nice. Well, we're almost there. We're almost ready to tackle the algorithms based on elliptic curve cryptography. Almost. Remember, for ECC to work we need to define "<i>Cyclic subgroup of an elliptic curve defined over a finite field</i>". We have almost everything down at this point. The last step is finding out what these cyclic subgroups are.
+</p>
+<h3>Cyclic subgroups of an elliptic curve</h3>
+<p>
+	We said that an elliptic curve defined over a finite field has a finite number of points, and the actual number of these points is called the order of the group. Since trying all the possible values for <it-math>x</it-math> from 0 to <it-math>p - 1</it-math> is not a feasible way to count the points (if <it-math>p</it-math> is a large prime) we need to use <a href="https://en.wikipedia.org/wiki/Schoof's_algorithm" target="_blank">Schoof's algorithm</a>. While the details of the algorithm are not important what is important is that it runs in polynomial time.
+</p>
+<p>
+	Now, let's revisit scalar multiplication in the context of elliptic curves over finite fields. Let's take a point <it-math>P = (3, 6)</it-math> of the curve <it-math>y^2 \equiv x^3 + 2x + 3\, mod\, 97</it-math>. Now let's calculate all the multiples of <it-math>P</it-math>
+</p>
+<ul flex-offset="5">
+	<li><it-math>0P = 0</it-math>;</li>
+	<li><it-math>1P = (3, 6)</it-math>;</li>
+	<li><it-math>2P = (80, 10)</it-math>;</li>
+	<li><it-math>3P = (80, 87)</it-math>;</li>
+	<li><it-math>4P = (3, 91)</it-math>;</li>
+	<li><it-math>5P = 0</it-math>;</li>
+	<li><it-math>6P = (3, 6)</it-math>;</li>
+	<li><it-math>7P = (80, 10)</it-math>;</li>
+	<li>...</li>
+</ul>
+<p>
+	So, not only are there five distinct points when multiplying <it-math>P</it-math>, but the points appear cyclically. And there you have it, friend, the set of the multiples of <it-math>P</it-math> is a cyclic subgroup. We will call the point <it-math>P</it-math> the base point. We define the order of <it-math>P</it-math> as the smallest positive integer <it-math>n</it-math> such that <it-math>nP = 0</it-math>. Thanks to Lagrange and his theorem, we can guarantee that the order of a subgroup is a divisor of the order of the parent group. Now, it was easy to find the order of the subgroup when the order was 5. What do we do when the order is <it-math>5\cdot10^10</it-math>? Well:
+</p>
+<ol flex-offset="5">
+	<li>calculate the elliptic curve's order <it-math>N</it-math> using Schoof's algorithm;</li>
+	<li>find out all the divisors of <it-math>N</it-math>;</li>
+	<li>for every divisor <it-math>n</it-math> of <it-math>N</it-math>, compute <it-math>nP</it-math>;</li>
+	<li>the smallest <it-math>n</it-math> such that <it-math>nP = 0</it-math> is the order of the subgroup.</li>
+</ol>
+<p>
+	The final piece of the final piece of the puzzle that is ECC is: how do we choose a base point? Well, before we go any further we need to define one more thing, and that is the cofactor of the subgroup, <it-math>h = N/n</it-math>. Why is this important? Consider that for every point of an elliptic curve we have <it-math>NP = 0</it-math>, and using <it-math>h</it-math> we can write:
+</p>

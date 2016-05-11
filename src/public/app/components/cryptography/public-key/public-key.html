@@ -1,1 +1,23 @@
-TODO: Public-key cryptography overview
+<p>
+	Public-key cryptography, or asymmetric cryptography, is any cryptographic system that uses pairs of keys: a public key that may be widely distributed, paired with a private key which is available only to the owner. With this we can achieve two things:
+</p>
+<ul flex-offset="5">
+	<li><b>encryption</b> - by using someone's public key to encrypt a message we can make sure that only the holder of the paired private key can decrypt it, guaranteeing both confidentiality and integrity when paired with a checksum;</li>
+	<li><b>authentication</b> - by signing a message with our private key anyone can guarantee that the message was created by us which also guaranteeing non-repudation.</li>
+</ul>
+<p>
+	The strength of public-key cryptography relies on the degree of computational impracticality for a properly generated private key to be determined from its corresponding public key. In order to achieve this, public-key cryptography systems often rely on cryptographic algorithms based on mathematical problems that currently admit no efficient solution, such as <a href="https://en.wikipedia.org/wiki/Integer_factorization" target="_blank">integer factorization</a> and <a href="https://en.wikipedia.org/wiki/Discrete_logarithm">discrete logarithm</a>.
+</p>
+<p>
+	Because of the computational complexity of asymmetric encryption, it is usually used only for small blocks of data, typically the transfer of a <a ui-sref="main.cryptography.symmetric-key.overview">symmetric encryption</a> session keys. This symmetric key is then used to encrypt the rest of the potentially long message sequence.
+</p>
+<p>
+	In this section we take a detailed look into two popular public-key cryptosystems:
+</p>
+<ul flex-offset="5">
+	<li><a ui-sref="main.cryptography.public-key.rsa.overview">RSA - Rivest-Shamir-Adleman</a>;</li>
+	<li><a ui-sref="main.cryptography.public-key.rsa.overview">ECC - Elliptic Curve Cryptography</a>.</li>
+</ul>
+<p>
+	In each subsection we take a look at the algorithm steps, the underlying math which provides security for the system, some demos and some additional readings. Have fun!
+</p>

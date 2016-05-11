@@ -1,0 +1,64 @@
+<p>
+  First, let us explain what are so called "trapdoor one-way functions".
+</p>
+<h3>
+  Trapdoor one-way function
+</h3>
+<p>
+  The idea of a trapdoor one-way function is that you have a function that is easy to compute in one direction, but difficult to compute in the opposite direction without special information called the "trapdoor".
+  For example, one crucial property of a public key cryptosystem is that the private key should not be computable given the public key. If this is not the case, an attacker could just take Bob's public key, compute the corresponding private key and use it to decrypt any messages sent to Bob.
+  That's why we need two different keys (public and private) such that we can't compute private key from public, but we can use private key to decrypt any message encrypted with public key.
+  We saw the idea of the trapdoor one-way function and the problem of using public and private keys in public key cryptosystem. Well, what type of function can we use to solve this problem? (Hint: trapdoor one-way function)
+</p>
+<p>
+  Informally (<a href="http://mathworld.wolfram.com/One-WayFunction.html" target="_blank">see</a>), a function <it-math>f</it-math> is a one-way function if:<br/>
+  <ol flex-offset="5">
+    <li>
+      The description of <it-math>f</it-math> is publicly known and does not require any secret information for its operation.
+    </li>
+    <li>
+      Given <it-math>x</it-math>, it is easy to compute <it-math>f(x)</it-math>
+    </li>
+    <li>
+      Given <it-math>y</it-math>, in the range of <it-math>f</it-math>, it is hard to find an <it-math>x</it-math> such that <it-math>f(x)=y</it-math>. More precisely, any efficient algorithm solving a P-problem succeeds in inverting <it-math>f</it-math> with negligible probability.
+    </li>
+  </ol>
+</p>
+<p>
+  Informally (<a href="http://mathworld.wolfram.com/TrapdoorOne-WayFunction.html" target="_blank">see</a>), a function <it-math>f:\left\{0, 1\right\}^{l(n)} \times \left\{0, 1\right\}^n \dashrightarrow \left\{0, 1\right\}^{m(n)}</it-math> is a trapdoor one-way function if:<br/>
+  <ol flex-offset="5">
+    <li>
+      It is a one-way function.
+    </li>
+    <li>
+      For fixed public key <it-math>y \in \left\{0, 1\right\}^{l(n)}</it-math>, <it-math>f(x, y)</it-math> is viewed as a function <it-math>f_y(x)</it-math> of <it-math>x</it-math> that maps <it-math>n</it-math> bits to <it-math>m(n)</it-math> bits. Then there is an efficient algorithm that, on input <it-math>\langle y, f_y(x), z\rangle</it-math> produces <it-math>x'</it-math> such that <it-math>f_y(x')=f_y(x)</it-math> for some trapdoor key <it-math>z \in \left\{0, 1\right\}^{k(n)}</it-math>.
+    </li>
+  </ol>
+</p>
+<h3>
+  Public-key cryptosystem
+</h3>
+<p>
+  "Public-key cryptosystem" is a concept invented by <a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" target="_blank">Diffie and Hellman</a>. In a public-key cryptosystem each user places an encryption procedure <it-math>E</it-math> in a public file. The user keeps secret the details of his corresponding decryption procedure <it-math>D</it-math>. These procedures have the following four properties:<br />
+  <ol flex-offset="5" type="a">
+    <li>
+      Deciphering the enciphered form of a message <it-math>M</it-math> yields <it-math>M</it-math>. Formally,<br />
+      <div layout="row">
+	       <span flex-offset="40" class="center-text"><it-math>D(E(M)) = M</it-math></span><span class="right-text" flex>(RSA M 1)</span>
+       </div>
+    </li>
+    <li>
+      Both <it-math>E</it-math> and <it-math>D</it-math> are easy to compute.
+    </li>
+    <li>
+      By publicly revealing <it-math>E</it-math> the user does not reveal an easy way to compute <it-math>D</it-math>. This means that in practice only he can decrypt messages encrypted with <it-math>E</it-math>, or compute <it-math>D</it-math> efficiently.
+    </li>
+    <li>
+      If a message <it-math>M</it-math> is first deciphered and then enciphered, <it-math>M</it-math> is the result. Formally,<br />
+      <div layout="row">
+      	<span flex-offset="40" class="center-text"><it-math>E(D(M)) = M</it-math></span><span class="right-text" flex>(RSA M 2)</span>
+      </div>
+    </li>
+  </ol>
+Encipherment process consists of a <i>general method</i> and <i>encryption key.</i> We use the general method, under the control of the key, to encipher a message <it-math>M</it-math> and get ciphertext <it-math>C</it-math>, which is the enciphered form of the message. Since the security of the encipherment process depends on the security of the key that means that everyone can use the same general method. A function <it-math>E</it-math> that satisfies <i>(a)-(c)</i> is called a "trap-door one-way function" (who knew). If it also satisfies <i>(d)</i> it is called a "trap-door one-way permutation". A trap-door one-way function which satisfies <i>(d)</i> must be a permutation: every message is the ciphertext for some other message and every ciphertext is itself a permissible message.
+</p>

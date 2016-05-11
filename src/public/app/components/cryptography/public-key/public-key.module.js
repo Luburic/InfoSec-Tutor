@@ -2,5 +2,5 @@
 	"use strict";
 
 	angular
-		.module('infosec-tutor.cryptography.public-key', ['ui.router', 'infosec-tutor.cryptography.public-key.ecc']);
+		.module('infosec-tutor.cryptography.public-key', ['ui.router', 'infosec-tutor.cryptography.public-key.ecc', 'infosec-tutor.cryptography.public-key.rsa']);
 })();

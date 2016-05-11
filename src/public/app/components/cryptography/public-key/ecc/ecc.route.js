@@ -5,12 +5,14 @@
 		.module('infosec-tutor.cryptography.public-key.ecc')
 		.config(config);
 
-	config.$inject = ['$stateProvider'];
-	function config($stateProvider) {
+	config.$inject = ['$stateProvider', '$urlRouterProvider'];
+	function config($stateProvider, $urlRouterProvider) {
+		$urlRouterProvider.when('/cryptography/public-key/ecc', '/cryptography/public-key/ecc/overview');
+
 		$stateProvider
 			.state('main.cryptography.public-key.ecc', {
 				url: '/ecc',
-				redirectTo: 'main.cryptography.public-key.ecc.overview',
+				abstract: true,
 				views: {
 					"tabs@main": {
 						templateUrl: "app/components/cryptography/public-key/ecc/ecc-tabs.html"
@@ -18,7 +20,7 @@
 					"": {
 						template: "<ui-view></ui-view>"
 					}
-				},
+				}
 			})
 			.state('main.cryptography.public-key.ecc.overview', {
 				url: '/overview',

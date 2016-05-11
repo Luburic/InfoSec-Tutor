@@ -5,8 +5,10 @@
 		.module('infosec-tutor.cryptography.public-key')
 		.config(config);
 
-	config.$inject = ['$stateProvider'];
-	function config($stateProvider) {
+	config.$inject = ['$stateProvider', '$urlRouterProvider'];
+	function config($stateProvider, $urlRouterProvider) {
+		$urlRouterProvider.when('/cryptography/public-key', '/cryptography/public-key/overview');
+
 		$stateProvider
 			.state('main.cryptography.public-key', {
 				abstract: true,

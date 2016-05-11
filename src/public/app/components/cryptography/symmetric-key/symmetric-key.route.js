@@ -5,8 +5,10 @@
 		.module('infosec-tutor.cryptography.symmetric-key')
 		.config(config);
 
-	config.$inject = ['$stateProvider'];
-	function config($stateProvider) {
+	config.$inject = ['$stateProvider', '$urlRouterProvider'];
+	function config($stateProvider, $urlRouterProvider) {
+		$urlRouterProvider.when('/cryptography/symmetric-key', '/cryptography/symmetric-key/overview');
+
 		$stateProvider
 			.state('main.cryptography.symmetric-key', {
 				abstract: true,

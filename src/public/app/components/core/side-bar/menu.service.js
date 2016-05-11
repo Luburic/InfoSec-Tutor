@@ -30,11 +30,11 @@
                 state: 'main.cryptography.symmetric-key.overview',
               }, {
                   name: 'DES',
-                  state: 'main.cryptography.symmetric-key.des',
+                  state: 'main.cryptography.symmetric-key.des.overview',
                   type: 'link',
               }, {
                   name: 'AES',
-                  state: 'main.cryptography.symmetric-key.aes',
+                  state: 'main.cryptography.symmetric-key.aes.overview',
                   type: 'link',
               }]
           },
@@ -47,7 +47,7 @@
                 state: 'main.cryptography.public-key.overview',
               }, {
                   name: 'RSA',
-                  state: 'main.cryptography.public-key.rsa',
+                  state: 'main.cryptography.public-key.rsa.overview',
                   type: 'link',
               }, {
                   name: 'ECC',

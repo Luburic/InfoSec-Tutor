@@ -5,8 +5,10 @@
 		.module('infosec-tutor.cryptography')
 		.config(config);
 
-	config.$inject = ['$stateProvider'];
-	function config($stateProvider) {
+	config.$inject = ['$stateProvider', '$urlRouterProvider'];
+	function config($stateProvider, $urlRouterProvider) {
+		$urlRouterProvider.when('/cryptography', '/cryptography/overview');
+
 		$stateProvider
 			.state('main.cryptography', {
 				abstract: true,

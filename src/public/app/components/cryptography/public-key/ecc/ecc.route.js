@@ -10,8 +10,15 @@
 		$stateProvider
 			.state('main.cryptography.public-key.ecc', {
 				url: '/ecc',
-				templateUrl: 'app/components/cryptography/public-key/ecc/ecc.html',
-				redirectTo: 'main.cryptography.public-key.ecc.overview'
+				redirectTo: 'main.cryptography.public-key.ecc.overview',
+				views: {
+					"tabs@main": {
+						templateUrl: "app/components/cryptography/public-key/ecc/ecc-tabs.html"
+					},
+					"": {
+						template: "<ui-view></ui-view>"
+					}
+				},
 			})
 			.state('main.cryptography.public-key.ecc.overview', {
 				url: '/overview',

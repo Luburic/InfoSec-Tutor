@@ -13,7 +13,7 @@
 </p>
 <p>
 	"Wait a minute HTML page, that elliptic curve definition is too simple to be math, isn't it?"<br>
-	I'm glad you asked, fellow student. It is, isn't it. Fortunately, <a href="http://mathworld.wolfram.com/EllipticCurve.html" target="_blank">the eggheads over at Wolfram have a much more complicated (and more accurate) definition</a>. However, for our understanding of ECC, <i>a set of points described by the equation ECC M 1</i> will suffice. Let's take a look at some pictures at fig. 1.
+	I'm glad you asked, fellow student. It is, isn't it? Fortunately, <a href="http://mathworld.wolfram.com/EllipticCurve.html" target="_blank">the eggheads over at Wolfram have a much more complicated (and more accurate) definition</a>. However, for our understanding of ECC, <i>a set of points described by the equation ECC M 1</i> will suffice. Let's take a look at some pictures at fig. 1.
 </p>
 <div layout="row">
 	<span flex class="center-text">
@@ -32,13 +32,13 @@
 <h3>Groups</h3>
 <p>
 	Next we need to define a group over elliptic curves. But in order to do that we need to get up to speed with groups in algebra.<br>
-	In mathematics, a group <it-math>(\mathbb{A}, \cdot)</it-math> is a set, G, together with an opeartion that combines any two elements to form a third element. The symbol <it-math>\cdot</it-math> is a general placeholder for a concretely given operation. The operation needs to satisfy four requirements (axioms):
+	In mathematics, a group <it-math>(\mathbb{A}, \cdot)</it-math> is a set, G, together with an operation that combines any two elements to form a third element. The symbol <it-math>\cdot</it-math> is a general placeholder for a concretely given operation. The operation needs to satisfy four requirements (axioms):
 </p>
 <ol flex-offset="5">
 	<li><b>closure</b> - if <it-math>a</it-math> and <it-math>b</it-math> are members of <it-math>\mathbb{G}</it-math>, then <it-math>a \cdot b</it-math> is a member of <it-math>\mathbb{G}</it-math>;</li>
 	<li><b>associativity</b> - <it-math>(a \cdot b) \cdot c = a \cdot (b \cdot c)</it-math>;</li>
 	<li><b>identity</b> - there exists an identity elemnet 0 such that <it-math>a \cdot 0 = 0 \cdot a = a</it-math>;</li>
-	<li><b>invertability</b> - for every <it-math>a</it-math> there exists <it-math>b</it-math> such that <it-math>a \cdot b = 0</it-math>.</li>
+	<li><b>invertibility</b> - for every <it-math>a</it-math> there exists <it-math>b</it-math> such that <it-math>a \cdot b = 0</it-math>.</li>
 </ol>
 <p>
 	A special case of a group is called the <i>abelian group</i> and it adds a fifth requirement to the group operation:
@@ -61,7 +61,7 @@
 </p>
 <h3>Groups defined over elliptic curves</h3>
 <p>
-	Let's define a group <it-math>(E, +)</it-math>, where <it-math>E</it-math> is the set of points of an elliptic curve and +, called addition, is defined by the following rule: given three aligned, non zero points <it-math>P, Q</it-math> and <it-math>R</it-math>, their sum is <it-math>P + Q + R = 0</it-math>. Let's examine how this group is an abelian group:
+	Let's define a group <it-math>(E, +)</it-math>, where <it-math>E</it-math> is the set of points of an elliptic curve and +, called addition, is defined by the following rule: given three aligned, non-zero points <it-math>P, Q</it-math> and <it-math>R</it-math>, their sum is <it-math>P + Q + R = 0</it-math>. Let's examine how this group is an abelian group:
 </p>
 <ul flex-offset="5">
 	<li>the elements of the group are the points of an elliptic curve;</li>
@@ -83,7 +83,7 @@
 </div>
 <h4>Geometric method for point addition</h4>
 <p>
-	It's time to take a look at how we can calculate the addition of two points. As displayed above, the simplest method is to rely on geometry: if we draw a line passing through <it-math>P</it-math> and <it-math>Q</it-math> the line will interesect a third point <it-math>R</it-math>. If we take the inverse of this point <it-math>-R</it-math>, we have found the result of <it-math>P + Q</it-math>.
+	It's time to take a look at how we can calculate the addition of two points. As displayed above, the simplest method is to rely on geometry: if we draw a line passing through <it-math>P</it-math> and <it-math>Q</it-math> the line will intersect a third point <it-math>R</it-math>. If we take the inverse of this point <it-math>-R</it-math>, we have found the result of <it-math>P + Q</it-math>.
 </p>
 <p>
 	Now, while this geometric method works, we need to take into account special cases, presented on fig. 3:
@@ -106,11 +106,11 @@
 	You wanted math, you got it. But really, what was the point of the previous section? Well, we defined geometric addition, and we needed to cover all the corner cases. Using a pencil and a ruler you can now calculate the result of addition defined above of any two points on the curve. Fun, right? Well, how could you know, you haven't even <a href="https://cdn.rawgit.com/andreacorbellini/ecc/920b29a/interactive/reals-add.html" target="_blank">tried it out...</a><!--TODO: Integrate the tool with our system-->
 </p>
 <p>
-	Well, while it's fun (I do it every friday night), you can't really make computers do efficient geometric addition. Now you might be thinking "Wait a minute HTML page, aren't you based on a computer system?" and while most HTML pages are reliant on computer systems I am no such case. But that's a story for another time.
+	Well, while it's fun (I do it every Friday night), you can't really make computers do efficient geometric addition. Now you might be thinking "Wait a minute HTML page, aren't you based on a computer system?" and while most HTML pages are reliant on computer systems I am no such case. But that's a story for another time.
 </p>
 <h4>Algebraic method for point addition</h4>
 <p>
-	In order for a computer to perform point addition, we need to define an algebraic method. For simplicity I will ommit the following two corner cases:
+	In order for a computer to perform point addition, we need to define an algebraic method. For simplicity I will omit the following two corner cases:
 </p>
 <ul flex-offset="5">
 	<li><it-math>P + (-P) = 0</it-math>;</li>
@@ -129,7 +129,7 @@
 	<span flex-offset="30" class="center-text"><it-math>\begin{array}{rcl}x_R & = & m^2 - x_P - x_Q \\y_R & = & y_P + m(x_R - x_P)\end{array}</it-math></span><span class="right-text" flex>(ECC M 4)</span>
 </div>
 <p>
-	Let's examine the math we have covered so far and test it out. Looking at the <a href="https://cdn.rawgit.com/andreacorbellini/ecc/920b29a/interactive/reals-add.html?px=1&py=2&qx=3&qy=4" tagert="_blank">interactive tool for elliptic curves</a> we can see that that for points <it-math>P = (1, 2), Q = (3, 4)</it-math> the third point is <it-math>-R = P + Q, R = (-3, 2)</it-math>. The tool is calculating using the algebraic method, but you and I can simply look at the drawing and use the geometric method. But let's see if our equations ECC M 3 and ECC M 4 really hold up.
+	Let's examine the math we have covered so far and test it out. Looking at the <a href="https://cdn.rawgit.com/andreacorbellini/ecc/920b29a/interactive/reals-add.html?px=1&py=2&qx=3&qy=4" target="_blank">interactive tool for elliptic curves</a> we can see that that for points <it-math>P = (1, 2), Q = (3, 4)</it-math> the third point is <it-math>-R = P + Q, R = (-3, 2)</it-math>. The tool is calculating using the algebraic method, but you and I can simply look at the drawing and use the geometric method. But let's see if our equations ECC M 3 and ECC M 4 really hold up.
 </p>
 <div layout="row">
 	<span flex-offset="30" class="center-text"><it-math>
@@ -188,11 +188,11 @@
 	The last concept we need to define is a finite field. Before talking about finite fields let me remind you what a field is. A field <it-math>(F, +, \cdot)</it-math> is a set <it-math>F</it-math> that is an abelian group with respect to two compatible operations, addition and multiplication, such that the following axioms hold:
 </p>
 <ol flex-offset="5">
-	<li><b>clojure</b> - for all <it-math>a</it-math> and <it-math>b</it-math> in <it-math>F</it-math>, both <it-math>a + b</it-math> and <it-math>a \cdot b</it-math> are in <it-math>F</it-math>;</li>
+	<li><b>closure</b> - for all <it-math>a</it-math> and <it-math>b</it-math> in <it-math>F</it-math>, both <it-math>a + b</it-math> and <it-math>a \cdot b</it-math> are in <it-math>F</it-math>;</li>
 	<li><b>associativity</b> - for all <it-math>a, b</it-math> and <it-math>c</it-math> in <it-math>F</it-math>, the following equalities hold: <it-math>(a + b) + c = a + (b + c), (a \cdot b) \cdot c = a \cdot (b \cdot c)</it-math>;</li>
 	<li><b>commutativity</b> - for all <it-math>a</it-math> and <it-math>b</it-math> in <it-math>F</it-math>, the following equalities hold: <it-math>a + b = b + a, a \cdot b = b \cdot a</it-math>;</li>
 	<li><b>identity</b> - there exists an element of <it-math>F</it-math>, called the additive identity and denoted by 0, such that for all <it-math>a \in F, a + 0 = a</it-math>. Likewise, there is an element, called the multiplicative identity element and denoted by 1, such that for all <it-math>a \in F, a \cdot 1 = a</it-math>. To exclude the zero ring <it-math>({0}, +, \cdot)</it-math>, the additive and multiplicative identity need to be distinct;</li>
-	<li><b>invertability</b> - for every <it-math>a</it-math> in <it-math>F</it-math>, there exists an element <it-math>-a</it-math> in <it-math>F</it-math>, such that <it-math>a + (-a) = 0</it-math>. Similarly, for any <it-math>a</it-math> in <it-math>F</it-math> other than 0 there exists an element <it-math>a^{-1}</it-math> in <it-math>F</it-math>, such that <it-math>a \cdot a^{-1} = 1</it-math>;</li>
+	<li><b>invertibility</b> - for every <it-math>a</it-math> in <it-math>F</it-math>, there exists an element <it-math>-a</it-math> in <it-math>F</it-math>, such that <it-math>a + (-a) = 0</it-math>. Similarly, for any <it-math>a</it-math> in <it-math>F</it-math> other than 0 there exists an element <it-math>a^{-1}</it-math> in <it-math>F</it-math>, such that <it-math>a \cdot a^{-1} = 1</it-math>;</li>
 	<li><b>distributivity</b> - for all <it-math>a, b</it-math> and <it-math>c</it-math> in <it-math>F</it-math>, the following equality holds: <it-math>a \cdot (b + c) = (a \cdot b) + (a \cdot c)</it-math>.
 </ol>
 <p>
@@ -270,7 +270,7 @@
 </p>
 <h3>The discrete logarithm problem</h3>
 <p>
-	If we know <it-math>P</it-math> and <it-math>Q</it-math>, what is <it-math>k</it-math>, such that <it-math>Q = kP</it-math>? This is what we were building up to. The discrete logarithm problem for elliptic curves. This is believed to be a hard problem to solve computationaly, and this is why ECC algorithms are secure under the right circumstances. What the right circumstances are, as well as what the algorithms are, you can find in the Algorithm subsection. The biggest problem with the discrete logarithm problem is that we don't have any actual proof that the problem is hard, but at the moment we can't solve it without a lot of computer power and time.
+	If we know <it-math>P</it-math> and <it-math>Q</it-math>, what is <it-math>k</it-math>, such that <it-math>Q = kP</it-math>? This is what we were building up to. The discrete logarithm problem for elliptic curves. This is believed to be a hard problem to solve computationally, and this is why ECC algorithms are secure under the right circumstances. What the right circumstances are, as well as what the algorithms are, you can find in the <a ui-sref="main.cryptography.public-key.ecc.algorithm">Algorithm</a> subsection. The biggest problem with the discrete logarithm problem is that we don't have any actual proof that the problem is hard, but at the moment we can't solve it without a lot of computer power and time.
 </p>
 <p>
 	It's been a pleasure friend. If you made it this far you deserve a pat on the back. Since I can't pat you I suggest you do it yourself. Go on. Good. Alrighty then, see you on another part of the InfoSec Tutor app. Cheers!

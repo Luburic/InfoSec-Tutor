@@ -126,5 +126,21 @@
 	</it-math></span>
 </div>
 <p>
-	Fun, isn't it? This is the same equation we had for <it-math>P</it-math> under step 2 of the signature generation algorithm.
+	Fun, isn't it? This is the same equation we had for <it-math>P</it-math> under step 2 of the signature generation algorithm. And that's it, you should now understand how cyclic subgroups of elliptic curves defined over finite fields keep your facebook messages secure. Secure from eavesdropping that is.
+</p>
+<h3>Real world ECC</h3>
+<p>
+	Now that you understand what ECC is an how it works let's see how ECC figures into the real world. On the overview page I already mentioned that many implementations of TLS, PGP and SSH use ECC, as well as Bitcoin. So, what are the domain parameters for these real world applications of ECC? Well, <code>secp256k1</code> is a curve used in <a href="https://github.com/openssl/openssl/blob/81fc390/crypto/ec/ec_curve.c#L766" target="_blank">OpenSSL's implementation of TLS<a> and by <a href="https://en.bitcoin.it/wiki/Secp256k1" target="_blank">Bitcoin</a> for digital signatures. Here are the domain parameters:
+</p>
+<ul flex-offset="5">
+	<li><it-math>p = 0xffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffe fffffc2f \approx 1.158 \cdot 10^77</it-math>;</li>
+	<li><it-math>a = 0</it-math>;</li>
+	<li><it-math>b = 7</it-math>;</li>
+	<li><it-math>x_G = 0x79be667e f9dcbbac 55a06295 ce870b07 029bfcdb 2dce28d9 59f2815b 16f81798 \approx 5.507 \cdot 10^76</it-math>;</li>
+	<li><it-math>y_G = 0x483ada77 26a3c465 5da4fbfc 0e1108a8 fd17b448 a6855419 9c47d08f fb10d4b8 \approx 3.267 \cdot 10^76</it-math>;</li>
+	<li><it-math>n = 0xffffffff ffffffff ffffffff fffffffe baaedce6 af48a03b bfd25e8c d0364141 \approx 1.158 \cdot 10^77</it-math>;</li>
+	<li><it-math>h = 1</it-math>.</li>
+</ul>
+<p>
+	Well, those are some big numbers. A simple curve too. TODO: Attacks (nonrandom k, babystep, giantstep, Pollard's rho).
 </p>

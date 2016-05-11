@@ -21,3 +21,9 @@ p {
 .right-text {
   text-align: right;
 }
+
+.no-scroll {
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+}

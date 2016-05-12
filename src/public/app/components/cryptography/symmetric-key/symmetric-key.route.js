@@ -19,10 +19,6 @@
 				url: '/overview',
 				templateUrl: 'app/components/cryptography/symmetric-key/symmetric-key.html'
 			})
-			.state('main.cryptography.symmetric-key.des', {
-				url: '/des',
-				templateUrl: 'app/components/cryptography/symmetric-key/symmetric-key-des.html'
-			})
 			.state('main.cryptography.symmetric-key.aes', {
 				url: '/aes',
 				templateUrl: 'app/components/cryptography/symmetric-key/symmetric-key-aes.html'

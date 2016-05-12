@@ -2,5 +2,145 @@
 	So, let's talk algorithms.
 </p>
 <p>
-	Well... not so fast. In order to understand how the two most popular algorithms based on elliptic curves work, we need to take a step back and examine the elliptic curves themselves and how we can utilize them to encrypt our private messages and digitally sign them. If you already know what elliptic curves are, and can understand the phrase "<i>Cyclic subgroup of an elliptic curve defined over a finite field</i>" than by all means go on right ahead, but otherwise be sure to check out the <a ui-sref="main.cryptography.public-key.ecc.elliptic-curves">Elliptic Curves</a> subsection. No, really, <em>go read the Elliptic Curves subsection</em>, you can't understand the algorithm without the math. I promise it won't hurt.
+	Well... not so fast. In order to understand how the two most popular algorithms based on elliptic curves work, we need to take a step back and examine the elliptic curves themselves and how we can utilize them to encrypt our private messages and digitally sign them. If you already know what elliptic curves are, and can understand the phrase "<i>Cyclic subgroup of an elliptic curve defined over a finite field</i>" than by all means go on right ahead, but otherwise be sure to check out the <a ui-sref="main.cryptography.public-key.ecc.elliptic-curves">Elliptic Curves</a> subsection. No, really, <em>go read the Elliptic Curves subsection</em>, you can't understand the algorithm without the math. I promise it won't hurt... much.
+</p>
+<h3>Domain parameters</h3>
+<p>
+	Our elliptic curve algorithms will work in a cyclic subgroup of an elliptic curve over a finite field. Therefore, our algorithms will need the following parameters:
+</p>
+<ul flex-offset="5">
+	<li><b>prime <it-math>p</it-math></b> - the size of the finite field;</li>
+	<li><b>coefficients <it-math>a</it-math> and <it-math>b</it-math></b> - the elliptic curve equation;</li>
+	<li><b>base point <it-math>G</it-math></b> - subgroup generator;</li>
+	<li><b>order <it-math>n</it-math></b>;</li>
+	<li><b>cofactor <it-math>h</it-math></b>.</li>
+</ul>
+<p>
+	While it was stated that the discrete logarithm problem is a hard one to solve, this doesn't hold true for all elliptic curves. There are some classes of elliptic curves that are particularly weak and allow the use of special purpose algorithms to solve the discrete logarithm problem efficiently, namely <a href="http://wstein.org/edu/2010/414/projects/novotney.pdf" target="_blank">Smart's attack</a>, which can solve this problem in polynomial time on a classical computer.
+</p>
+<p>
+	So we have a problem when choosing the domain parameters of a curve - how can we trust them to be secure? Say that you want to establish an ECC-based protocol for communication with various servers and you hired me to do your crypto. I tell you "Here, let's use these domain parameters, I'm quite fond of them." What do you say? "Sure HTML page, I know I can trust you!". Now, in that particular case you'd be right, as I am nothing if not trustworthy. But say that my cousin, Malicious HTML page, was in town, and wanted to use my computer to watch some cat videos. And say that we were out of lemon and I needed to run down to the store to get some. Now, Malicious HTML page starts a chat with you and says "Hey, I got these brand new domain parameters, they're the bomb." and you say "Awesome." and Malicious HTML page breaks your crypto.
+</p>
+<p>
+	How do we stop Malicious HTML page from breaking your crypto? Well, we can use something a large random number, known as seed <it-math>S</it-math>, as a domain parameter instead of the coefficients <it-math>a</it-math> and <it-math>b</it-math>. In fact we can use <it-math>S</it-math> to generate <it-math>a</it-math> and <it-math>b</it-math>, or the base point <it-math>G</it-math> or both. All we need to do is calculate the hash of the seed and use some function to extract <it-math>a</it-math>, <it-math>b</it-math> or <it-math>G</it-math> from the hash. An example of this can be seen in fig. 1 (1). The principle to use hashes to generate parameters is known as the "<a href="https://en.wikipedia.org/wiki/Nothing_up_my_sleeve_number" target="_blank">nothing up my sleeve</a>?" principle. Now the question becomes - can Malicious HTTP page find a seed <it-math>S</it-math> which will generate insecure coefficients <it-math>a</it-math> and <it-math>b</it-math>? Since we can google what insecure coefficients <it-math>a</it-math> and <it-math>b</it-math> are, can we calculate <it-math>S</it-math> from them? No, as that would require hash inversion (fig. 1 (2)).
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/ecc/alg1.png">
+			<figcaption>Fig. 1 Generating elliptic curve coefficients from a seed <it-math>S</it-math></figcaption>
+		</figure>
+	</span>
+</div>
+<h3>Elliptic curve cryptography</h3>
+<p>
+	Once we've chosen our domain parameters it's time to generate our private and public key (after all, this is a set of algorithms based on <a ui-sref="main.cryptography.public-key.overview">public-key cryptography</a>):
+</p>
+<ol flex-offset="5">
+	<li><b>private key <it-math>d</it-math></b>, chosen from <it-math>\{1,..., n - 1\}</it-math>, where <it-math>n</it-math> is the order of the subgroup;</li>
+	<li><b>public key <it-math>H = dG</it-math></b>, where <it-math>G</it-math> is the base point of the subgroup.</li>
+</ol>
+<p>
+	If you read the <a ui-sref="main.cryptography.public-key.ecc.elliptic-curves">Elliptic Curves</a> subsection then you know that while calculating <it-math>H = dG</it-math> is easy, finding <it-math>d</it-math> when you know <it-math>H</it-math> and <it-math>G</it-math> is hard, as it requires solving a discrete logarithm problem. Now that we have that figured out, it's time to take a look at two algorithms based on ECC: ECDHA (Elliptic Curve Diffie-Hellman), which is a key exchange protocol and ECDSA (Elliptic Curve Digital Signature Algorithm), used for digital signing.
+</p>
+<h3>ECDH</h3>
+<p>
+	ECDH is a variant of the <a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" target="_blank">Diffie-Helman</a> algorithm for elliptic curves. It defines how keys should be generated and exchanged between parties. How the actual encryption will be done is up to us. Let's say that Alice and Bob want to exchange information securely, so that Eve, an eavesdropper, may sniff the packets but may not decode them. Alice and Bob do the following:
+</p>
+<ol flex-offset="5">
+	<li>Both Alice and Bob generate their private and public keys <it-math>(H_A, d_A), (H_B, d_B)</it-math> using the same domain parameters;</li>
+	<li>Alice and Bob exchange their public keys over an insecure channel;</li>
+	<li>Alice calculates <it-math>k = d_AH_B</it-math> and Bob calculates <it-math>k = d_BH_B</it-math>;</li>
+	<li>Since both parties have the same key <it-math>k = d_AH_B = d_A(d_BG) = d_B(d_AG) = d_BH_A</it-math> they can use it with a symmetric-key encryption algorithm, like <a ui-sref="main.cryptography.symmetric-key.aes.overview">AES</a>, to secure any future communication.</li>
+</ol>
+<p>
+	Eve has <it-math>H_A</it-math> and <it-math>H_B</it-math> and she can't calculate <it-math>k</it-math>. However, let's entertain a scenario where Mallory, a Man-in-the-Middle is compromising our key exchange.
+</p>
+<ol flex-offset="5">
+	<li>Alice, Bob and Malory generate their private and public keys <it-math>(H_A, d_A), (H_B, d_B), (H_M, d_M)</it-math> using the same domain parameters;</li>
+	<li>Alice sends Bob her public key <it-math>H_A</it-math>, Mallory intercepts it and instead sends Bob her public key <it-math>H_M</it-math>. She does the same when Bob sends Alice his public key;</li>
+	<li>Alice calculates <it-math>k_{AM} = d_AH_M</it-math> and Bob calculates <it-math>k_{BM} = d_BH_M</it-math>;</li>
+	<li>Alice sends packets encrypted with <it-math>k_{AM}</it-math> to Bob, Mallory intercepts, decrypts, reads and encrypts them with <it-math>k_{BM}</it-math> and sends them to Bob. She does the same when Bob sends packets to Alice, swapping keys.</li>
+</ol>
+<p>
+	This Man-in-the-Middle attack is not specific to ECDH, but is a compromise of the Diffie-Hellman protocol and an illustration of this can be seen on fig. 2 for DH applied to modular arithmetic.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/ecc/dh.png">
+			<figcaption>Fig. 2 Diffie-Helman Man-in-the-Middle attack <it-math>S</it-math></figcaption>
+		</figure>
+	</span>
+</div>
+<p>
+	This can be solved by either relying on a trusted authority which will sign and distribute public keys, or by relying on the <a href="https://en.wikipedia.org/wiki/Interlock_protocol" target="_blank">interlock protocol</a>.
+</p>
+<h4>ECDHE</h4>
+<p>
+	Ephemeral ECDH is a modification of the standard ECDH key exchange algorithm, where the exchanged keys are temporary, rather than static. ECDHE key exchange can't rely on authentication from a third party trusted authority, but can still be secured using the interlock protocol. EDCHE is used in TLS, where both the client and the server generate their key pair when the connection is established. The keys are then signed with the TLS certificate for authentication and exchanged between the parties.
+</p>
+<h3>ECDSA</h3>
+<p>
+	Similar to the classical <a href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">Digital Signature Algorithm</a>, the ECDSA algorithm allows Alice to sign messages with her private key <it-math>d_A</it-math>, allowing anyone to validate the signature using her public key <it-math>H_A</it-math>, guaranteeing that the message was created by Alice and nobody else.
+</p>
+<p>
+	The algorithm will sign a truncated hash of the message, rather than the message itself. Since hashes act like digital fingerprints (by being practically unique) this doesn't leave us open to any attack. We do, however, need to choose a cryptographically-secure hash function, like <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank">SHA-2</a>. We truncate the hash of the message to have the same number of bits as <it-math>n</it-math>, the order of the subgroup. The algorithm performed by Alice to sign the message works as follows:
+</p>
+<ol flex-offset="5">
+	<li>Take a random integer <it-math>k</it-math> chosen from <it-math>{1,..., n-1}</it-math>, where <it-math>n</it-math> is the subgroup order;</li>
+	<li>calculate the point <it-math>P = kG</it-math>, where <it-math>G</it-math> is the base point of the subgroup;</li>
+	<li>calculate the number <it-math>r = x_P\,mod\,n</it-math>, where <it-math>x_P</it-math> is the <it-math>x</it-math> coordinate of <it-math>P</it-math>;</li>
+	<li>if <it-math>r = 0</it-math>, then choose another <it-math>k</it-math> and try again;</li>
+	<li>calculate <it-math>s = k^{-1}(z + rd_A)\,mod\,n</it-math>, where <it-math>d_A</it-math> is Alice's private key, <it-math>k^{-1}</it-math> is the multiplicative inverse of <it-math>k</it-math> modulo <it-math>n</it-math> and <it-math>z</it-math> is the truncated hash of the message;</li>
+	<li>if <it-math>s = 0</it-math>, then choose another <it-math>k</it-math> and try again;</li>
+</ol>
+<p>
+	The pair <it-math>(r, s)</it-math> is the signature. Put plainly, the algorithm first generates a secret <it-math>k</it-math>, which is hidden in <it-math>r</it-math> thanks to the discrete logarithm problem of point multiplication. <it-math>r</it-math> is then bound to the message hash by the equation which solves <it-math>s</it-math>.
+</p>
+<p>
+	Wait! In the elliptic curves subsection we said that <it-math>n</it-math> has to be a prime number. If a subgroup has a non-primer order, ECDSA can't be used, but why is that? Well, we can't guarantee that calculating the multiplicative inverse of <it-math>k</it-math> modulo <it-math>n</it-math> will work if <it-math>n</it-math> is not a prime number. Let's show this with a brief example: Using the <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm" target="_blank">extended Euclidian algorithm</a> I can calculate that <it-math>9^{-1}\,mod\,23 = 18</it-math> and I can check this with a basic equation <it-math>9 \cdot 9^{-1}\,mod\,23 = 9 \cdot 18\,mod\,23 = 1</it-math>. Now, what is the value of <it-math>x</it-math> in the equation <it-math>2 \cdot x\,mod\,4 = 1</it-math>? Indeed, the set of integers modulo 4 is not a field, as 2 has no multiplicative inverse.
+</p>
+<p>
+	So, how do we verify Alice's signature? For that we need Alice's public key <it-math>H_A</it-math>, the truncated hash <it-math>z</it-math> and the signature <it-math>(r, s)</it-math>. We then solve the following equations:
+</p>
+<ol flex-offset="5">
+	<li><it-math>u_1 = s^{-1}z\,mod\,n</it-math>;</li>
+	<li><it-math>u_2 = s^{-1}r\,mod\,n</it-math>;</li>
+	<li><it-math>P = u_1G + u_2H_A</it-math>;</li>
+	<li>the signature is valid if <it-math>r = x_P\,mod\,n</it-math>.</li>
+</ol>
+<p>
+	So... the equations for verifying signatures don't really look anything like the equations for signing, right? Wrong. Let's unpack the equation given above under 3 and do some math:
+</p>
+<div layout="row">
+	<span flex-offset="30" class="center-text"><it-math>
+		\begin{array}{rl}
+  P & = u_1 G + u_2 H_A \\
+  & = u_1 G + u_2 d_A G \\
+  & = (u_1 + u_2 d_A) G \\
+  & = (s^{-1} z + s^{-1} r d_A) G \\
+  & = s^{-1} (z + r d_A) G \\
+  & = kG \\
+		\end{array}
+	</it-math></span>
+</div>
+<p>
+	Fun, isn't it? This is the same equation we had for <it-math>P</it-math> under step 2 of the signature generation algorithm. And that's it, you should now understand how cyclic subgroups of elliptic curves defined over finite fields keep your facebook messages secure. Secure from eavesdropping that is.
+</p>
+<h3>Real world ECC</h3>
+<p>
+	Now that you understand what ECC is an how it works let's see how ECC figures into the real world. On the overview page I already mentioned that many implementations of TLS, PGP and SSH use ECC, as well as Bitcoin. So, what are the domain parameters for these real world applications of ECC? Well, <code>secp256k1</code> is a curve used in <a href="https://github.com/openssl/openssl/blob/81fc390/crypto/ec/ec_curve.c#L766" target="_blank">OpenSSL's implementation of TLS<a> and by <a href="https://en.bitcoin.it/wiki/Secp256k1" target="_blank">Bitcoin</a> for digital signatures. Here are the domain parameters:
+</p>
+<ul flex-offset="5">
+	<li><it-math>p = 0xffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffe fffffc2f \approx 1.158 \cdot 10^77</it-math>;</li>
+	<li><it-math>a = 0</it-math>;</li>
+	<li><it-math>b = 7</it-math>;</li>
+	<li><it-math>x_G = 0x79be667e f9dcbbac 55a06295 ce870b07 029bfcdb 2dce28d9 59f2815b 16f81798 \approx 5.507 \cdot 10^76</it-math>;</li>
+	<li><it-math>y_G = 0x483ada77 26a3c465 5da4fbfc 0e1108a8 fd17b448 a6855419 9c47d08f fb10d4b8 \approx 3.267 \cdot 10^76</it-math>;</li>
+	<li><it-math>n = 0xffffffff ffffffff ffffffff fffffffe baaedce6 af48a03b bfd25e8c d0364141 \approx 1.158 \cdot 10^77</it-math>;</li>
+	<li><it-math>h = 1</it-math>.</li>
+</ul>
+<p>
+	Well, those are some big numbers. A simple curve too. TODO: Attacks (nonrandom k, babystep, giantstep, Pollard's rho).
 </p>

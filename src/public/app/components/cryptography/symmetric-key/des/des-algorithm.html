@@ -1,0 +1,82 @@
+<p>
+	DES is the archetypal block cipher, an algorithm that takes a fixed-length string of plaintext bits and transforms it through a series of complicated operations into another ciphertext bitstring of the same length. The size of the block is 64 bits. DES relies on a key that consists of 64 bits. However, only 56 of these are actually used by the algorithm, while the remaining 8 bits are used for parity checking. Hence the effective key length is 56 bits. Like other block ciphers, DES by itself is not a secure means of encryption, but must instead be used in <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation" taget="_blank">a mode of operation</a>. Decryption uses the same structure as encryption but with the keys used in reverse order.
+</p>
+<!--TODO Mode of operation page-->
+<div layout="row">
+	<span layout="column" flex>
+	<p>
+		The overall structure of the algorithm is shown on fig. 1. After the initial permutation <it-math>IP</it-math> there are 16 identical rounds of processing, where each round uses a different subkey derived from the main key, after which the final permutation <it-math>FP</it-math> is executed. <it-math>FP</it-math> is the inverse of <it-math>IP</it-math> and both operations permute bits. While this has no cryptographic significance it was included in order to facilitate loading blocks in and out of mid-1970s 8-bit hardware.
+	</p>
+	<p>
+		The DES structure is a Feistel network, where the difference between encryption and decryption is only in the key schedule. In order to decrypt a ciphertext the same algorithm is used, but the subkeys derived from the main key are introduced in reverse order, allowing the same hardware or software to do both encryption and decryption. The algorithm can be defined as follows:
+	</p>
+	<ol>
+		<li>Bitwise initial permutation;</li>
+		<li>Plaintext is split into 32-bit halves, <it-math>L_0</it-math> and <it-math>R_0</it-math>;</li>
+		<li><it-math>L_i = R_{i-1}</it-math>;</li>
+		<li><it-math>R_i = L_{i-1} \oplus f(R_{i-1},k_i)</it-math>, where <it-math>f</it-math> is the Fiestel function and <it-math>k_i</it-math> is the round subkey;</li>
+		<li>If final round swap <it-math>L_{16}</it-math> and <it-math>R_{16}</it-math> and do final permutation, else go to step 3.</li>
+	</ol>
+	</span>
+	<span>
+		<figure>
+			<img src="./assets/images/course/cryptography/des/des.png">
+			<figcaption flex-offset="10">Fig. 1 The overall Fiestel structure of DES</figcaption>
+		</figure>
+	</span>
+</div>
+<h3>The Fiestel function</h3>
+<div layout="row">
+	<span layout="column" flex>
+	<p>
+		The F-function, depicted on fig. 2, operates on half a block (32 bits) at a time and consists of four stages:
+	</p>
+	<ol>
+		<li><b>expansion</b> - the 32-bit half-block is expanded to 48 bits using the expansion permutation, denoted as <it-math>E</it-math> in the diagram, by duplicating half the bits. The output consists of eight 6-bit pieces, each containing a copy of 4 corresponding input bits, plus a copy of the immediately adjacent bit from each of the input pieces to either side (so the first 6-bit set would have bits 1, 2, 3 and 4, and also 32, which is left of the first block and 5, which is right. The second 6-bit set would have bits 5, 6, 7 and 8, and also 4 and 9, etc.);</li>
+		<li><b>key mixing</b> - the result is combined using the XOR operation with the round subkey;</li>
+		<li><b>substitution</b> - after mixing in the subkey, the block is divided into eight 6-bit pieces which are then processed by the S-boxes, or substitution boxes. Each of the eight S-oxes replaces its six input bits with four output bits, according to a non-linear transofmration, provided in the form of a lookup table. The S-boxes provide the core of DES security;</li>
+		<li><b>permutation</b> - the output from the S-boxes is rearranged according to a fixed permutation, the P-box. This is designed so that, after permutation, each S-box's output bits are spread across four different S-boxes in the next round.</li>
+	</ol>
+	<p>
+		The alternation of substitution from the S-boxes, and permutation of bits from the P-box and E-expansion provides both confusion and diffusion, as mentioned in the <a ui-sref="main.cryptography.symmetric-key.overview">overview section of symmetric-key encryption</a>.
+	</p>
+	</span>
+	<span>
+		<figure>
+			<img src="./assets/images/course/cryptography/des/f.png">
+			<figcaption flex-offset="20">Fig. 2 The Fiestel function</figcaption>
+		</figure>
+	</span>
+</div>
+<h3>S-box</h3>
+<p>
+	Since S-boxes provide the core of the security of DES we should examine them a bit more closely. Looking at fig. 3, we can see that <it-math>S_1</it-math> a table with 16 columns and 4 rows. When an S-box receives the 6-bit input it takes the first and last bit in order to calculate the row, and the middle 4 bits in order to calculate the column. So, for an example input of <it-math>100101_2</it-math> we take the first and last bit, get the row <it-math>11_2 = 3</it-math> and take the remaining 4 bits <it-math>0010_2 = 2</it-math> and get the column, which means that for input <it-math>100101_2</it-math> the otput of <it-math>S_1</it-math> is 8.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/des/sbox.png">
+			<figcaption>Fig. 3 <it-math>S_1</it-math>-Box</figcaption>
+		</figure>
+	</span>
+</div>
+<h3>Key schedule</h3>
+<div layout="row">
+	<span layout="column" flex>
+	<p>
+		The final thing we need to cover is the key schedule function, which derives 16 round subkeys from the initial 64-bit key. The algorithm, shown on fig. 4 consists of the following steps:
+	</p>
+	<ol>
+		<li>By processing the key with Permuted Choice 1<it-math>(PC-1)</it-math>, which is a fixed permutation, we extract the 56-bit key which will be used for the algorithm, while the remaining 8 are either discarded or used for pairty cheking;</li>
+		<li>Divide the 56-bit key into two 28-bit halves, <it-math>C_0</it-math> and <it-math>D_0</it-math>. From this point each half is treated separatly;</li>
+		<li>In rounds <it-math>i = 1, 2, 9, 16</it-math> rotate each half by one bit. In all other rounds rotate by two bits;</li>
+		<li>Concatanate <it-math>C_i</it-math> and <it-math>D_i</it-math> and process them with Permuted Choice 2 <it-math>(PC-2)</it-math>, which is a fixed permutation that takes as input 56 bits and outputs 48 bits.</li>
+	</ol>
+	</span>
+	<span>
+		<figure>
+			<img src="./assets/images/course/cryptography/des/key.png">
+			<figcaption flex-offset="30">Fig. 4 The key schedule of DES</figcaption>
+		</figure>
+	</span>
+</div>

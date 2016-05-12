@@ -1,1 +1,38 @@
-TODO: Symmetric-key cryptography overview
+<p>
+	Symmetric-key algorithms are algorithms for cryptography that use the same cryptographic keys for both encryption of plaintext and decryption of ciphertext. Most often the key used for encryption and decryption is the same key and is represented as a shared secrete between two or more parties. This requirement that both parties have access to the secret key is one of the main drawbacks of symmetric key encryption, in comparison to <a ui-sref="main.cryptography.public-key.overview">public-key encryption</a>. There are two types of ciphers used by symmetric-key encryption.
+</p>
+<ul flex-offset="5">
+	<li><a href="https://en.wikipedia.org/wiki/Stream_cipher" target="_blank"><b>stream cipher</b></a> - encrypts bytes of a message one at a time;</li>
+	<li><a href="https://en.wikipedia.org/wiki/Block_cipher"><b>block cipher</b></a> - encrypts bytes of the plaintext in blocks, padding the plaintext so that it is a multiple of the block size if need be.</li>
+</ul>
+<p>
+	In this section we focus on block ciphers. Perhaps in the future someone will add stream cipher lessons. Perhaps that someone will be you?
+</p>
+<p>
+	A block cipher consists of two paired algorithms, one for encryption, <it-math>E</it-math> and the other for decryption, <it-math>D</it-math>. Both algorithms accept two inputs, an input block of size <it-math>n</it-math> bits and a key of size <it-math>k</it-math> bits, where both algorithms yield an <it-math>n</it-math>-bit output block. The decryption algorithm <it-math>D</it-math> is defined to be the inverse function of encryption, <it-math>D = E^{-1}</it-math>. There are two primitive operations with which strong encryption algorithms can be built:
+</p>
+<ul flex-offset="5">
+	<li><b>confusion</b> - an encryption operation where the relationship between key and ciphertext is obscured. A common way of achieving confusion is substitution;</li>
+	<li><b>diffusion</b> - also known as the <a href="https://en.wikipedia.org/wiki/Avalanche_effect" target="_blank">avalanche effect</a>, this is an encryption operation where the influence of one plaintext symbol is spread over many ciphertext symbols, with the goal of hiding statistical properties of the plaintext. A common way of achieving diffusion is with bit permutation.</li>
+</ul>
+<p>
+	Both operations by themselves cannot provide security. The idea is to concatenate confusion and diffusion elements to build so called product ciphers. Most of today's block ciphers are product ciphers, as they consist of rounds which are applied repeatedly to the data. Product ciphers can reach excellent diffusion, where the changing of one bit of plaintext results, on average, in the change of half the output bits, as illustrated on fig. 1.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/sym/block.png">
+			<figcaption>Fig. 1 Block cipher avalanche effect</figcaption>
+		</figure>
+	</span>
+</div>
+<p>
+	The two block cypher algorithms we will review in detail are:
+</p>
+<ul flex-offset="5">
+	<li><a ui-sref="main.cryptography.symmetric-key.des.overview">DES - Data Encryption Standard</a>;</li>
+	<li><a ui-sref="main.cryptography.symmetric-key.aes.overview">AES - Advanced Encryption Standard</a>.</li>
+</ul>
+<p>
+	In each subsection we take a look at the algorithm steps, the underlying math which provides security for the system, some demos and some additional readings. Have fun!
+</p>

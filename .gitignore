@@ -1,3 +1,4 @@
 node_modules
 */**/assets/js
 */**/npm-debug.log
+npm-debug.log

@@ -1,0 +1,227 @@
+<h3>
+  Trapdoor one-way function
+</h3>
+<p>
+  The idea of a trapdoor one-way function is that you have a function that is easy to compute in one direction, but difficult to compute in the opposite direction without special information called the "trapdoor".
+  We want to tell you a story about RSA cryptography, so the best way to show you that is to provide a real world example. So, the story says that one crucial property of a public key cryptosystem is that the private key should not be computable given the public key. If this is not the case, an attacker could just take Bob's public key, compute the corresponding private key and use it to decrypt any messages sent to Bob.
+  That's why we need two different keys (public and private) such that we can't compute private key from public, but we can use private key to decrypt any message encrypted with public key.
+  We saw the idea of the trapdoor one-way function and the problem of using public and private keys in public key cryptosystem. Well, what type of function can we use to solve this problem? (Hint: trapdoor one-way function)
+</p>
+<p>
+  Informally (<a href="http://mathworld.wolfram.com/One-WayFunction.html" target="_blank">see</a>), a function <it-math>f</it-math> is a one-way function if:<br/>
+  <ol flex-offset="5">
+    <li>
+      The description of <it-math>f</it-math> is publicly known and does not require any secret information for its operation.
+    </li>
+    <li>
+      Given <it-math>x</it-math>, it is easy to compute <it-math>f(x)</it-math>
+    </li>
+    <li>
+      Given <it-math>y</it-math>, in the range of <it-math>f</it-math>, it is hard to find an <it-math>x</it-math> such that <it-math>f(x)=y</it-math>. More precisely, any efficient algorithm solving a P-problem succeeds in inverting <it-math>f</it-math> with negligible probability.
+    </li>
+  </ol>
+</p>
+<p>
+  Informally (<a href="http://mathworld.wolfram.com/TrapdoorOne-WayFunction.html" target="_blank">see</a>), a function <it-math>f:\left\{0, 1\right\}^{l(n)} \times \left\{0, 1\right\}^n \dashrightarrow \left\{0, 1\right\}^{m(n)}</it-math> is a trapdoor one-way function if:<br/>
+  <ol flex-offset="5">
+    <li>
+      It is a one-way function.
+    </li>
+    <li>
+      For fixed public key <it-math>y \in \left\{0, 1\right\}^{l(n)}</it-math>, <it-math>f(x, y)</it-math> is viewed as a function <it-math>f_y(x)</it-math> of <it-math>x</it-math> that maps <it-math>n</it-math> bits to <it-math>m(n)</it-math> bits. Then there is an efficient algorithm that, on input <it-math>\langle y, f_y(x), z\rangle</it-math> produces <it-math>x'</it-math> such that <it-math>f_y(x')=f_y(x)</it-math> for some trapdoor key <it-math>z \in \left\{0, 1\right\}^{k(n)}</it-math>.
+    </li>
+  </ol>
+</p>
+<h3>
+  Public-key cryptosystem
+</h3>
+<p>
+  "Public-key cryptosystem" is a concept invented by <a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" target="_blank">Diffie and Hellman</a>. In a public-key cryptosystem each user places an encryption procedure <it-math>E</it-math> in a public file. The user keeps secret the details of his corresponding decryption procedure <it-math>D</it-math>. These procedures have the following four properties:<br />
+  <ol flex-offset="5" type="a">
+    <li>
+      <p>
+        Deciphering the enciphered form of a message <it-math>M</it-math> yields <it-math>M</it-math>. Formally,<br />
+      </p>
+      <div layout="row">
+	       <span flex-offset="40" class="center-text"><it-math>D(E(M)) = M</it-math></span><span class="right-text" flex>(RSA M 1)</span>
+       </div>
+    </li>
+    <li>
+      <p>
+        Both <it-math>E</it-math> and <it-math>D</it-math> are easy to compute.
+      </p>
+    </li>
+    <li>
+      <p>
+        By publicly revealing <it-math>E</it-math> the user does not reveal an easy way to compute <it-math>D</it-math>. This means that in practice only he can decrypt messages encrypted with <it-math>E</it-math>, or compute <it-math>D</it-math> efficiently.
+      </p>
+    </li>
+    <li>
+      <p>
+        If a message <it-math>M</it-math> is first deciphered and then enciphered, <it-math>M</it-math> is the result. Formally,<br />
+      </p>
+      <div layout="row">
+      	<span flex-offset="40" class="center-text"><it-math>E(D(M)) = M</it-math></span><span class="right-text" flex>(RSA M 2)</span>
+      </div>
+    </li>
+  </ol>
+Encipherment process consists of a <i>general method</i> and <i>encryption key.</i> We use the general method, under the control of the key, to encipher a message <it-math>M</it-math> and get ciphertext <it-math>C</it-math>, which is the enciphered form of the message. Since the security of the encipherment process depends on the security of the key that means that everyone can use the same general method. A function <it-math>E</it-math> that satisfies <i>(a)-(c)</i> is called a "trap-door one-way function" (who knew). If it also satisfies <i>(d)</i> it is called a "trap-door one-way permutation". A trap-door one-way function which satisfies <i>(d)</i> must be a permutation: every message is the ciphertext for some other message and every ciphertext is itself a permissible message.
+</p>
+<h3>
+  Totient function
+</h3>
+<p>
+  <p>
+    Ahh...The properties of numbers...If you get deep into this topic, you will realise how numbers are interesting. So, the totient function <it-math>\phi(n)</it-math> (<it-math>\phi</it-math> is Greek letter PHI), also called Euler's totient function, is defined as the number or positive integers <it-math>\leq n</it-math> that are relatively prime to <it-math>n</it-math>. Also, 1 is counted as relatively prime to all numbers. And yes, two integers are relatively prime if they share no common positive factors (divisors). Well, besides 1.
+    Ok...Since a positive integer <it-math>\leq n</it-math> which is also relatively prime to <it-math>n</it-math> is called a "totative", the totient fucntion <it-math>\phi(n)</it-math> can be defined as the number of totatives of <it-math>n</it-math>.
+    Let us give you an example:<br />
+    There are 4 totatives of number 8 (1, 3, 5, 7), so we can write this like <it-math>\phi(8)=4</it-math>.<br />
+    This was easy because we had to check only 8 numbers. Usually, this process is hard with large numbers, except in one case. If you look closely at figure 1, you will notice some patterns (at least we hope so).
+  </p>
+  <div layout="row">
+  	<span flex class="center-text">
+  		<figure>
+  			<img src="./assets/images/course/cryptography/rsa/rsa-totient_of_primes.png">
+  			<figcaption>Fig. 1 The first thousand values of <it-math>\phi(n)</it-math></figcaption>
+  		</figure>
+  	</span>
+  </div>
+  <p>
+    The straight line of points along the top represents all the prime numbers. Since prime numbers have no factors grater than one, the <it-math>\phi(p)</it-math> where <it-math>p</it-math> is prime number can be expressed as follows:<br />
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>\phi(p)=p-1</it-math></span>
+  </div>
+  <p>
+    Ok...Now if someone asks you to find <it-math>\phi(15485867)</it-math> where 15485867 is a prime number you can say: "No worries, I got this!"<br />
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>\phi(15485867)=15485866</it-math></span>
+  </div>
+  <p>
+    As you can see this is very easy to compute. This leads to an interesting result based on the fact that the <it-math>\phi</it-math> function is multiplicative. For example,
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>\phi(p\cdot q)=\phi(p)\cdot\phi(q)</it-math></span>
+  </div>
+  <p>
+    where <it-math>p</it-math> and <it-math>q</it-math> are prime numbers. So if we know that <it-math>n=p\cdot q</it-math> then computing <it-math>\phi(n)</it-math> is:<br />
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>\phi(n)=(p-1)\cdot(q-1)</it-math></span>.
+  </div>
+  <h4>
+    Fermat's Little Theorem
+  </h4>
+  <p>
+    If <it-math>p</it-math> is a prime number and <it-math>a</it-math> is a natural number, then
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>a^p \equiv a</it-math> <it-math>(</it-math>mod <it-math>p)</it-math></span>.
+  </div>
+  <p>
+    Furthermore, if <it-math>p \nmid a</it-math>(<it-math>p</it-math> does not divide <it-math>a</it-math>), then there exists some smallest exponent <it-math>d</it-math> such that
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>a^d - 1 \equiv 0 </it-math> <it-math>(</it-math>mod <it-math>p)</it-math></span>
+  </div>
+  <p>
+    and <it-math>d</it-math> divides <it-math>p-1</it-math>. Hence,
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>a^{p-1} -1 \equiv 0 </it-math> <it-math>(</it-math>mod <it-math>p)</it-math></span>
+  </div>
+  <h4>
+    Euler's Totient Theorem
+  </h4>
+  <p>
+    Euler publiushed a proof of the Fermant's little theorem in 1736. Let <it-math>\phi(n)</it-math> denote the totient function. Then
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>a^{\phi(n)} \equiv 1 </it-math> <it-math>(</it-math>mod <it-math>n)</it-math></span>
+  </div>
+  <p>
+    for all <it-math>a</it-math> relativly prime to <it-math>n</it-math>.
+  </p>
+</p>
+<h3>
+  The correctness of the deciphering RSA algorithm
+</h3>
+<p>
+  We can prove the correctness of the deciphering algorithm using an identity due to Euler and Fermat previously described: for any integer (message) <it-math>M</it-math> which is relatively prime to <it-math>n</it-math>, <br />
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>M^{\phi(n)} \equiv 1 </it-math> <it-math>(</it-math>mod <it-math>n)</it-math></span><span class="right-text" flex>(RSA M 3)</span>
+  </div>
+  <p>
+    where <it-math>\phi(n)</it-math> is our well known Euler totient function. For prime numbers <it-math>p</it-math>,
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>\phi(p)=p-1</it-math></span>
+  </div>
+  <p>
+    In our case, we have by elementary properties of the totient function:<br />
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>\phi(n)=\phi(p)\cdot\phi(q)</it-math></span>
+  </div>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>\ \ \ \ \ \ \ \ =(p-1)\cdot(q-1)</it-math></span><span class="right-text" flex>(RSA M 4)</span>
+  </div>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>\ \ \ \ \ \ \ \ =n-(p+q)+1</it-math>.</span>
+  </div>
+  <p>
+    Since <it-math>d</it-math> is relatively prime to <it-math>\phi(n)</it-math>, it has a multiplicative inverse <it-math>e</it-math> in the ring of integers modulo <it-math>\phi(n)</it-math>:<br />
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>e\cdot d \equiv 1 </it-math> <it-math>(</it-math>mod <it-math>\phi(n))</it-math></span>.<span class="right-text" flex>(RSA M 5)</span>
+  </div>
+  <p>
+    Now, we can prove that (RSA M 1) and (RSA M 2) hold (if we choose <it-math>e</it-math> and <it-math>d</it-math> like earlier described). Now<br />
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>D(E(M)) \equiv (E(M))^d \equiv (M^e)^d (</it-math>mod <it-math>n) = M^{e\cdot d} (</it-math>mod <it-math>n)</it-math></span>.
+  </div>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>E(D(M)) \equiv (D(M))^e \equiv (M^d)^e (</it-math>mod <it-math>n) = M^{e\cdot d} (</it-math>mod <it-math>n)</it-math></span>.
+  </div>
+  <p>
+    and
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>M^{e\cdot d} \equiv M^{k\cdot\phi(n)+1} (</it-math>mod <it-math>n) = M^{e\cdot d} (</it-math>mod <it-math>n)</it-math> (for some integer <it-math>k</it-math>)</span>.
+  </div>
+  <p>
+    From (RSA M 3) we see that for all <it-math>M</it-math> such that <it-math>p</it-math> does not divide <it-math>M</it-math><br />
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>M^{p-1} \equiv 1 </it-math> <it-math>(</it-math>mod <it-math>p)</it-math></span>
+  </div>
+  <p>
+    and since <it-math>(p-1)</it-math> divides <it-math>\phi(n)</it-math><br />
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>M^{k\cdot\phi(n)+1} \equiv M </it-math> <it-math>(</it-math>mod <it-math>p)</it-math>.</span>
+  </div>
+  <p>
+    This is trivially true when <it-math>M \equiv 0 (</it-math>mod <it-math>p)</it-math>, so that this equality actually holds for <i>all</i> <it-math>M</it-math>. Arguing similarly for <it-math>q</it-math> yields<br />
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>M^{k\cdot\phi(n)+1} \equiv M </it-math> <it-math>(</it-math>mod <it-math>q)</it-math>.</span>
+  </div>
+  <p>
+    Together these last two equations imply that for all <it-math>M</it-math>,
+  </p>
+  <div layout="row">
+    <span flex-offset="40" class="center-text"><it-math>M^{e\cdot d} \equiv M^{k\cdot\phi(n)+1} \equiv M </it-math> <it-math>(</it-math>mod <it-math>n)</it-math>.</span>
+  </div>
+  <p>
+  This implies (RSA M 1) and (RSA M 2) for all <it-math>M</it-math>, <it-math>0 \leq M &lt; n</it-math>. Therefore <it-maht>E</it-maht> and <it-math>D</it-math> are inverse permutation.<br />
+  <p>
+  <p>
+    Note: This proof was obtained from original work "A Method for Obtaining Digital Signatures and Public-Key Cryptosystems" by R.L. Rivest, A. Shamir, and L. Adleman.
+  </p>
+</p>
+<p>
+  After all this mathematics, we can finally see how to implement <a ui-sref="main.cryptography.public-key.rsa.algorithm">RSA algorithm</a>.
+</p>

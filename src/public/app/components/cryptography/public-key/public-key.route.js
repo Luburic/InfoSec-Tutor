@@ -16,12 +16,8 @@
 				template: '<ui-view></ui-view>'
 			})
 			.state('main.cryptography.public-key.overview', {
-				url: '/overview',
-				templateUrl: 'app/components/cryptography/public-key/public-key.html'
-			})
-			.state('main.cryptography.public-key.rsa', {
-				url: '/rsa',
-				templateUrl: 'app/components/cryptography/public-key/public-key-rsa.html'
-			});
+ 				url: '/overview',
+ 				templateUrl: 'app/components/cryptography/public-key/public-key.html'
+ 			});
 	}
 })();

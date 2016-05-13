@@ -1,0 +1,139 @@
+<h3>
+	The Grand Plan
+</h3>
+<p>
+  The RSA scheme encrypts a message by representing it as a number <it-math>M</it-math>, rising <it-math>M</it-math> to a publicly specified power <it-math>e</it-math>, and then taking the remainder when the result is divided by the publicly specified product, <it-math>n</it-math>, of two large <i>secret</i> prime numbers <it-math>p</it-math> and <it-math>q</it-math>.
+	Decryption is similar; only a different, <i>secret</i>, power <it-math>d</it-math> is used, where <it-math>e\cdot d \equiv 1 </it-math> <it-math>(</it-math>mod <it-math>(p-1)\cdot(q-1))</it-math>.
+	The security of the system rests in part on the difficulty of factoring the published divisor, <it-math>n</it-math>.
+</p>
+<h3>
+	Steps of RSA
+</h3>
+<p>
+	<h4>
+		Encryption and decryption
+	</h4>
+	<p>
+		In order to encrypt a message <it-math>M</it-math>, using a public encryption key <it-math>(e, n)</it-math>, where <it-math>e</it-math> and <it-math>n</it-math> are a pair of positive integers, <it-math>M</it-math> has to be represented as an integer between <it-math>0</it-math> and <it-math>n-1</it-math>.
+		Longer messages have to be divided into a series of blocks and each block represented as an integer. During the process, the size of a message does not increase. Encryption and decryption are of the following form:
+	</p>
+	<div layout="row">
+		 <span flex-offset="40" class="center-text"><it-math>C \equiv E(M) \equiv M^e</it-math> <it-math>(</it-math>mod <it-math>n)</it-math></span>
+	</div>
+	<p>
+		for a message <it-math>M</it-math>, and
+	</p>
+	<br />
+	<div layout="row">
+		 <span flex-offset="40" class="center-text"><it-math>D(C) \equiv C^d</it-math> <it-math>(</it-math>mod <it-math>n)</it-math></span>
+	</div>
+	<p>
+		for a ciphertext <it-math>C</it-math>. Both sender and receiver must know the value of <it-math>n</it-math>. The sender knows the value of <it-math>e</it-math>, and only the receiver knows the value of <it-math>d</it-math>. The public key is thus the pair of positive integers <it-math>(e, n)</it-math>, and the private key is the pair of positive integers <it-math>(d, n)</it-math>.
+	</p>
+	<h4>
+		Creating keys
+	</h4>
+	<p>
+		How can we generate a key? First thing to do is to compute <it-math>n</it-math> as the product of two very large "random" prime numbers <it-math>p</it-math> and <it-math>q</it-math> so that:
+	</p>
+	<div layout="row">
+		<span flex-offset="40" class="center-text"><it-math>n=p\cdot q</it-math></span>
+	</div>
+	<p>
+		These numbers have to be large so that it is not computationally feasible for anyone to factor <it-math>n=p\cdot q</it-math>. <it-math>n</it-math> will be public, but factors <it-math>p</it-math> and <it-math>q</it-math> will be hidden from everyone because of the difficulty of factoring <it-math>n</it-math>.
+		This also hides the way <it-math>d</it-math> can be derived from <it-math>e</it-math>.
+		Further, <it-math>d</it-math> has to be large, random integer which is relatively prime to <it-math>(p-1)\cdot(q-1)</it-math>, i.e. greatest common divisor for this two numbers is 1:
+	</p>
+	<div layout="row">
+		<span flex-offset="40" class="center-text"><it-math>GCD(d, (p-1)\codt(q-1))=1</it-math></span>
+	</div>
+	<p>
+		The integer <it-math>e</it-math> is computed from <it-math>p</it-math>, <it-math>q</it-math>, and <it-math>d</it-math> to be the “multiplicative inverse” of <it-math>d</it-math>, modulo <it-math>(p-1)\cdot(q-1)</it-math>. Thus, we have
+	</p>
+	<div layout="row">
+		<span flex-offset="40" class="center-text"><it-math>e\cdot d \equiv 1</it-math> <it-math>(</it-math>mod <it-math>(p-1)\cdot(q-1))</it-math></span>, i.e.
+	</div>
+	<br />
+	<div layout="row">
+		<span flex-offset="40" class="center-text"><it-math>e \equiv d^{-1}</it-math> <it-math>(</it-math>mod <it-math>\phi(n))</it-math></span>.
+	</div>
+	<p>
+		As an alternative (which is used in <a href="https://en.wikipedia.org/wiki/PKCS_1" target="_blank">PKCS#1</a>), you can choose <it-math>d</it-math> matching
+	</p>
+	<div layout="row">
+		<span flex-offset="40" class="center-text"><it-math>d\cdot e \equiv 1</it-math> <it-math>(</it-math>mod <it-math>\lambda)</it-math></span>,
+	</div>
+	<p>
+		where <it-math>\lambda = LCM(p-1, q-1)</it-math> and LCM is the least common multiple.
+	</p>
+	<h4>
+		Key distribution
+	</h4>
+	<p>
+		To enable Bob to send encrypted messages to Alice, Alice has to transmit her public key <it-math>(e, n)</it-math> via a reliable, but not necessarily secret route since the private key is never distributed. Simple, right?
+	</p>
+</p>
+<h3>
+	Example
+</h3>
+<p>
+	<h4>
+		Choosing keys
+	</h4>
+	<p>
+		Here are the steps for choosing private and public key:
+		<ol>
+			<li>
+				Choose <it-math>p=3</it-math> and <it-math>q=11</it-math>
+			</li>
+			<li>
+				Compute <it-math>n=p\cdot q=3\cdot 11=33</it-math>
+			</li>
+			<li>
+				Compute <it-math>\phi(n)=(p-1)\cdot(q-1)=2\cdot 10=20</it-math>
+			</li>
+			<li>
+				Choose <it-math>e</it-math> such that <it-math>1 &lt; e &lt; \phi(n)</it-math> and <it-math>e</it-math> and <it-math>n</it-math> are coprime. Let <it-math>e=7</it-math>
+			</li>
+			<li>
+				Compute a value for <it-math>d</it-math> such that <it-math>(d\cdot e)\  </it-math>mod<it-math>\  \phi(n) = 1</it-math>. One solution is <it-math>d=3</it-math> (<it-math>(3\cdot 7)\  </it-math>mod<it-math>\  20 = 1</it-math>)
+			</li>
+			<li>
+				Public key is <it-math>(e, n) \Rightarrow (7, 33)</it-math>
+			</li>
+			<li>
+				Private key is <it-math>(d, n) \Rightarrow (3, 33)</it-math>
+			</li>
+		</ol>
+	</p>
+	<h4>
+		What to encrypt?
+	</h4>
+	<p>
+		We will try to encrypt a message called <code>PI</code>. With <it-math>n = 33</it-math> we can encode one letters per block, substituting a two-digit number for each letter: blank = 00, A = 01, B = 02, . . . , Z = 26.
+		Transformed message <code>PI</code> consists of two blocks: <code>16</code> and <code>09</code>.
+	</p>
+	<h4>
+		Encryption
+	</h4>
+	<p>
+		First letter to encrypt is <code>P</code>, i.e. number <code>16</code>.<br />
+		We have <it-math>M^e</it-math> mod <it-math>n=16^7</it-math> mod <it-math>33=268 435 456</it-math> mod <it-math>33=25</it-math>.<br />
+		Second letter to encrypt is <code>I</code>, i.e. number <code>9</code>.<br />
+		We have <it-math>M^e</it-math> mod <it-math>n=9^7</it-math> mod <it-math>33=4 782 969</it-math> mod <it-math>33=15</it-math>.<br />
+		At the end, we have two encrypted blocks: <code>25</code> and <code>15</code>.
+	</p>
+	<h4>
+		Decryption
+	</h4>
+	<p>
+		First number to decrypt is <code>25</code>, i.e. letter <code>P</code>.<br />
+		We have <it-math>M^d</it-math> mod <it-math>n=25^3</it-math> mod <it-math>33=15625</it-math> mod <it-math>33=16</it-math>.<br />
+		Second number to decrypt is <code>15</code>, i.e. letter <code>I</code>.<br />
+		We have <it-math>M^d</it-math> mod <it-math>n=15^3</it-math> mod <it-math>33=3375</it-math> mod <it-math>33=9</it-math>.<br />
+		At the end, we have two decrypted blocks: <code>16</code> and <code>9</code> which is message <code>PI</code>.
+	</p>
+	<p>
+		It was easy, right? But imagine how hard would it be for large numbers?
+	</p>
+</p>

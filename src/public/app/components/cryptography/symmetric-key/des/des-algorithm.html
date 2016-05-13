@@ -34,7 +34,7 @@
 	<ol>
 		<li><b>expansion</b> - the 32-bit half-block is expanded to 48 bits using the expansion permutation, denoted as <it-math>E</it-math> in the diagram, by duplicating half the bits. The output consists of eight 6-bit pieces, each containing a copy of 4 corresponding input bits, plus a copy of the immediately adjacent bit from each of the input pieces to either side (so the first 6-bit set would have bits 1, 2, 3 and 4, and also 32, which is left of the first block and 5, which is right. The second 6-bit set would have bits 5, 6, 7 and 8, and also 4 and 9, etc.);</li>
 		<li><b>key mixing</b> - the result is combined using the XOR operation with the round subkey;</li>
-		<li><b>substitution</b> - after mixing in the subkey, the block is divided into eight 6-bit pieces which are then processed by the S-boxes, or substitution boxes. Each of the eight S-oxes replaces its six input bits with four output bits, according to a non-linear transofmration, provided in the form of a lookup table. The S-boxes provide the core of DES security;</li>
+		<li><b>substitution</b> - after mixing in the subkey, the block is divided into eight 6-bit pieces which are then processed by the S-boxes, or substitution boxes. Each of the eight S-boxes replaces its six input bits with four output bits, according to a non-linear transformation, provided in the form of a lookup table. The S-boxes provide the core of DES security;</li>
 		<li><b>permutation</b> - the output from the S-boxes is rearranged according to a fixed permutation, the P-box. This is designed so that, after permutation, each S-box's output bits are spread across four different S-boxes in the next round.</li>
 	</ol>
 	<p>
@@ -50,7 +50,7 @@
 </div>
 <h3>S-box</h3>
 <p>
-	Since S-boxes provide the core of the security of DES we should examine them a bit more closely. Looking at fig. 3, we can see that <it-math>S_1</it-math> a table with 16 columns and 4 rows. When an S-box receives the 6-bit input it takes the first and last bit in order to calculate the row, and the middle 4 bits in order to calculate the column. So, for an example input of <it-math>100101_2</it-math> we take the first and last bit, get the row <it-math>11_2 = 3</it-math> and take the remaining 4 bits <it-math>0010_2 = 2</it-math> and get the column, which means that for input <it-math>100101_2</it-math> the otput of <it-math>S_1</it-math> is 8.
+	Since S-boxes provide the core of the security of DES we should examine them a bit more closely. Looking at fig. 3, we can see that <it-math>S_1</it-math> a table with 16 columns and 4 rows. When an S-box receives the 6-bit input it takes the first and last bit in order to calculate the row, and the middle 4 bits in order to calculate the column. So, for an example input of <it-math>100101_2</it-math> we take the first and last bit, get the row <it-math>11_2 = 3</it-math> and take the remaining 4 bits <it-math>0010_2 = 2</it-math> and get the column, which means that for input <it-math>100101_2</it-math> the output of <it-math>S_1</it-math> is 8.
 </p>
 <div layout="row">
 	<span flex class="center-text">
@@ -67,10 +67,10 @@
 		The final thing we need to cover is the key schedule function, which derives 16 round subkeys from the initial 64-bit key. The algorithm, shown on fig. 4 consists of the following steps:
 	</p>
 	<ol>
-		<li>By processing the key with Permuted Choice 1<it-math>(PC-1)</it-math>, which is a fixed permutation, we extract the 56-bit key which will be used for the algorithm, while the remaining 8 are either discarded or used for pairty cheking;</li>
-		<li>Divide the 56-bit key into two 28-bit halves, <it-math>C_0</it-math> and <it-math>D_0</it-math>. From this point each half is treated separatly;</li>
-		<li>In rounds <it-math>i = 1, 2, 9, 16</it-math> rotate each half by one bit. In all other rounds rotate by two bits;</li>
-		<li>Concatanate <it-math>C_i</it-math> and <it-math>D_i</it-math> and process them with Permuted Choice 2 <it-math>(PC-2)</it-math>, which is a fixed permutation that takes as input 56 bits and outputs 48 bits.</li>
+		<li>by processing the key with Permuted Choice 1<it-math>(PC-1)</it-math>, which is a fixed permutation, we extract the 56-bit key which will be used for the algorithm, while the remaining 8 are either discarded or used for parity checking;</li>
+		<li>divide the 56-bit key into two 28-bit halves, <it-math>C_0</it-math> and <it-math>D_0</it-math>. From this point each half is treated separately;</li>
+		<li>in rounds <it-math>i = 1, 2, 9, 16</it-math> rotate each half by one bit. In all other rounds rotate by two bits;</li>
+		<li>concatenate <it-math>C_i</it-math> and <it-math>D_i</it-math> and process them with Permuted Choice 2 <it-math>(PC-2)</it-math>, which is a fixed permutation that takes as input 56 bits and outputs 48 bits.</li>
 	</ol>
 	</span>
 	<span>
@@ -80,3 +80,24 @@
 		</figure>
 	</span>
 </div>
+<h3>Security of DES</h3>
+<p>
+	Although more information has been published on the cryptanalysis of DES than any other block cipher, the most practical attack to date is still a brute force approach. Various minor cryptanalytic properties are known, and three theoretical attacks are possible which, while having a theoretical complexity less than a brute force attack, require an unrealistic number of known or chosen plaintexts to carry out, and are not a concern in practice.
+</p>
+<p>
+	Due to it's key length size of 56 bits, DES is easily breakable with modern computers through an exhaustive key search. For a given pair of plaintext and ciphertext <it-math>(x, y)</it-math> test all <it-math>2^56</it-math> keys until the condition <it-math>DES_k^{-1}(x) = y</it-math> is fulfilled. It is usually enough to know which language the encrypted message is written in, in which case no plaintext is needed to break the ciphertext and acquire the key.
+</p>
+<h3>3DES</h3>
+<p>
+	While the original DES algorithm can be broken with a modern computer there exists a variant, known as the Triple DES symmetric-key block cipher, which applies the DES cipher algorithm three times to each data block.
+</p>
+<p>
+	Triple DES uses a key bundle that comprises three DES keys, <it-math>K_1</it-math>, <it-math>K_2</it-math>, <it-math>K_3</it-math>, each of 56 bits, excluding parity bits. The encryption algorithm is:
+</p>
+<p>
+	<it-math>ciphertext = E_{K3}(D_{K2}(E_{K1}(plaintext)))</it-math>, where the plaintext is transformed with DES encrypt using <it-math>K_1</it-math>, then DES decrypt using <it-math>K_2</it-math>, and finally DES encrypt using <it-math>K_3</it-math>. The decryption is done in reverse: <it-math>plaintext = D_{K1}(E_{K2}(D_{K3}(ciphertext)))</it-math>. The standards define three keying options:
+</p>
+<ol flex-offset="5">
+	<li>All three keys are independent, which means 168 independent key bits;</li>
+	<li><it-math>K_1</it-math> and <it-math>K_2</it-math> are independent, and <it-math>K_3 = K_1</it-math>, providing 112 key bits. This option is stronger than simply encrypting with DES twice as it protects against <a href="https://en.wikipedia.org/wiki/Meet-in-the-middle_attack" target="_blank">Meet-in-the-Middle attacks</a>.</li>
+</ol>

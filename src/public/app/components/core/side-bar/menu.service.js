@@ -58,6 +58,12 @@
         });
 
         sections.push({
+          name: 'Review',
+          type: 'link',
+          state: 'main.review'
+        });
+
+        sections.push({
           name: 'About',
           type: 'link',
           state: 'main.about'

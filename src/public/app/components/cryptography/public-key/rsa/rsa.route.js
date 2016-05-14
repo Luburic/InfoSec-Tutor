@@ -38,10 +38,6 @@
 				url: '/demo',
 				templateUrl: 'app/components/cryptography/public-key/rsa/rsa-demo.html'
 			})
-			.state('main.cryptography.public-key.rsa.review', {
-				url: '/review',
-				template: '<it-review review="rsa"></it-review>'
-			})
 			.state('main.cryptography.public-key.rsa.next', {
 				url: '/next',
 				templateUrl: 'app/components/cryptography/public-key/rsa/rsa-next.html'

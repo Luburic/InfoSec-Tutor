@@ -36,7 +36,7 @@
 			})
 			.state('main.cryptography.symmetric-key.aes.review', {
 				url: '/review',
-				templateUrl: 'app/components/cryptography/symmetric-key/aes/aes-review.html'
+				template: '<it-review review="aes"></it-review>'
 			})
 			.state('main.cryptography.symmetric-key.aes.next', {
 				url: '/next',

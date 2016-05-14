@@ -36,7 +36,7 @@
 			})
 			.state('main.cryptography.symmetric-key.des.review', {
 				url: '/review',
-				templateUrl: 'app/components/cryptography/symmetric-key/des/des-review.html'
+				template: '<it-review review="des"></it-review>'
 			})
 			.state('main.cryptography.symmetric-key.des.next', {
 				url: '/next',

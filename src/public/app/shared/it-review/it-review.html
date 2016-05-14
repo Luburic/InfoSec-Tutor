@@ -1,4 +1,4 @@
-<form name="reviewForm" ng-if="review.length != 0">
+<form name="reviewForm" ng-if="review && review.length != 0">
 	<md-input-container class="md-block">
 		<label>
 			Enter your name, surname, and student index.
@@ -33,6 +33,6 @@
 	</div>
 	<md-button ng-disabled="reviewForm.$untouched || reviewForm.$invalid" class="md-raised md-primary" ng-click="submit();">Submit</md-button>
 </form>
-<div  ng-if="review.length == 0">
+<div  ng-if="!review || review.length == 0">
 	There is currently no test for this section.
 </div>

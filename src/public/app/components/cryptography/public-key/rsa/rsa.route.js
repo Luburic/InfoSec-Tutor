@@ -40,7 +40,7 @@
 			})
 			.state('main.cryptography.public-key.rsa.review', {
 				url: '/review',
-				templateUrl: 'app/components/cryptography/public-key/rsa/rsa-review.html'
+				template: '<it-review review="rsa"></it-review>'
 			})
 			.state('main.cryptography.public-key.rsa.next', {
 				url: '/next',

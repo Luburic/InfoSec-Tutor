@@ -20,6 +20,10 @@
 				url: '/home',
 				templateUrl: 'app/components/core/home.html'
 			})
+			.state('main.review', {
+				url: '/review',
+				template: '<it-review review="test"></it-review>'
+			})
 			.state('main.about', {
 				url: '/about',
 				templateUrl: 'app/components/core/about.html'

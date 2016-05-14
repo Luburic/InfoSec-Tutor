@@ -34,10 +34,6 @@
 				url: '/demo',
 				templateUrl: 'app/components/cryptography/symmetric-key/des/des-demo.html'
 			})
-			.state('main.cryptography.symmetric-key.des.review', {
-				url: '/review',
-				template: '<it-review review="des"></it-review>'
-			})
 			.state('main.cryptography.symmetric-key.des.next', {
 				url: '/next',
 				templateUrl: 'app/components/cryptography/symmetric-key/des/des-next.html'

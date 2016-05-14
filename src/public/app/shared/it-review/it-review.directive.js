@@ -16,7 +16,7 @@
 						scope.answer = {};
 						scope.submit = function() {
 							$http.post("http://" + itConstants.hostAddress + ":" + itConstants.hostPort + "/api/review/" + attrs.review, scope.answer).then(function() {
-								$state.go('main.cryptography.public-key.' + attrs.review + '.overview');
+								$state.go('main.overview');
 								$mdDialog.show(
 							      	$mdDialog.alert()
 								        .clickOutsideToClose(true)

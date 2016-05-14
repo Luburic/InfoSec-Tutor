@@ -1,0 +1,19 @@
+<p>
+  The US National Institute of Standards and Technology (NIST) issued a call for an Advanced Encryption Standard (AES) to replace the current DES.
+  Unlike the selection process for the DES, NIST had announced that the AES selection process would be open. Amongst 15 submitted algorithms that were completed in time and accepted, on 2 October 2000, NIST officially announced that Rijndael (invented by Joan Daemen and Vincent Rijmen), without modifications, would become the AES.
+  AES was adopted as a standard on November 26, 2001, and it was published as FIPS 197 in the Federal Register on December 4, 2001. The AES algorithm is a symmetric block cipher that can encrypt (encipher) and decrypt (decipher) information.
+  The only difference between Rijndael and the AES is the range of supported values for the block length and cipher key length. Rijndael is a block cipher with both a variable block length and a variable key length, while the AES fixes the block length to 128 bits, and supports key lengths of 128, 192 and 256 bits only.
+  As mentioned earlier, AES is implemented in secure file transfer protocols like FTPS, HTTPS, SFTP, AS2, WebDAVS, and OFTP. But what exactly is its role?
+  Because symmetric and asymmetric encryption algorithms each have their own strengths, modern secure file transfer protocols normally use a combination of the two. Asymmetric key ciphers a.k.a. public key encryption algorithms are great for key distribution and hence are used to encrypt the session key used for symmetric encryption.
+  Symmetric key ciphers like AES, on the other hand, are more suitable for encrypting the actual data (and commands) because they require less resources and are also much faster than asymmetric ciphers.
+</p>
+<p>
+	This section, consists of the <a ui-sref="main.cryptography.symmetric-key.aes.algorithm">Algorithm</a> subsection, where we'll show you the steps of the algorithm in detail.
+</p>
+<p>
+	The next subsection, titled <a ui-sref="main.cryptography.symmetric-key.aes.demo">Demo</a>, will allow you to play with the provided implementation of described algorithm. You can configure the parameters of the algorithm and see some output and metrics for custom input. Here we also include some benchmark results of the algorithm we used for various sets of input.
+</p>
+<p>
+	Moving on, in the subsection <a ui-sref="main.cryptography.symmetric-key.aes.review">Review</a> we'll do just that, review. Using the knowledge you have gained through the first two subsections you'll be able to answer a questionnaire which will test your grasp on the subject.<br><br>
+	Last, but certainly not least, we provide you with several links and references in the <a ui-sref="main.cryptography.symmetric-key.aes.next">What Next?</a> subsection, which should further develop your knowledge on the subject.
+</p>

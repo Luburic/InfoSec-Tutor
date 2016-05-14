@@ -8,11 +8,18 @@
   },
   "repository": "https://gitlab.com/luburic91/InfoSec-Tutor",
   "author": "Nikola Luburic <nikola.luburic@uns.ac.rs>",
-  "contributors": ["Milan Stojkov <stojkovm@uns.ac.rs>"],
-  "keywords": ["information security", "cryptography", "e-learning", "teaching aid"],
+  "contributors": [
+    "Milan Stojkov <stojkovm@uns.ac.rs>"
+  ],
+  "keywords": [
+    "information security",
+    "cryptography",
+    "e-learning",
+    "teaching aid"
+  ],
   "license": "MIT",
   "dependencies": {
-    "express": "^4.13.3",
-    "body-parser": "^1.14.1"
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3"
   }
 }

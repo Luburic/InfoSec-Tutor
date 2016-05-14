@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 app.get("/api/review/:review", controller.review);
+app.post("/api/review/:review", controller.reviewSubmit);
 
 app.listen(3000, function() {
     console.log("Server started");

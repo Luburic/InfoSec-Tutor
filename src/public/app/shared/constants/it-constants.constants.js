@@ -2,7 +2,7 @@
 	"use strict";
 	
 	var itConstants = {
-		hostAdress: "localhost",
+		hostAddress: "localhost",
 		hostPort: "3000"
 	};
 

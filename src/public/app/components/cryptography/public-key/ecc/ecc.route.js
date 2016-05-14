@@ -40,7 +40,7 @@
 			})
 			.state('main.cryptography.public-key.ecc.review', {
 				url: '/review',
-				templateUrl: 'app/components/cryptography/public-key/ecc/ecc-review.html'
+				template: '<it-review review="ecc"></it-review>'
 			})
 			.state('main.cryptography.public-key.ecc.next', {
 				url: '/next',

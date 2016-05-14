@@ -1,0 +1,38 @@
+<form name="reviewForm" ng-if="review.length != 0">
+	<md-input-container class="md-block">
+		<label>
+			Enter your name, surname, and student index.
+		</label>
+		<input type="text" ng-model="answer['student']" required name="student">
+		<div ng-messages="reviewForm.student.$error">
+			<div ng-message="required" ng-show="reviewForm.student.$error.required">This field is required.</div>
+        </div>
+	</md-input-container>
+	<div ng-repeat="r in review track by $index">
+		<div ng-if="r.type != 'checkbox'">
+			<br><br>
+			<md-input-container class="md-block">
+				<label>
+					{{$index + 1}}. {{r.question}}
+				</label>
+				<input ng-if="r.type == 'text'" name="{{r.id}}" type="text" ng-model="answer[r.id]">
+				<textarea rows="5" ng-if="r.type == 'textArea'" name="{{r.id}}" ng-model="answer[r.id]"></textarea>
+			</md-input-container>
+		</div>
+		<div ng-if="r.type == 'checkbox'">
+			<fieldset class="standard">
+		    	<legend>{{$index + 1}}. {{r.question}}</legend>
+	      		<div layout="row" layout-wrap="" flex="">
+	        		<div flex="50" ng-repeat="a in r.answers track by $index">
+	          			<md-checkbox ng-model="answer[r.id][$index]">{{ a }}</md-checkbox>
+	        		</div>
+		    	</div>
+		    </fieldset>
+			<br><br>
+		</div>
+	</div>
+	<md-button ng-disabled="reviewForm.$untouched || reviewForm.$invalid" class="md-raised md-primary" ng-click="submit();">Submit</md-button>
+</form>
+<div  ng-if="review.length == 0">
+	There is currently no test for this section.
+</div>

@@ -1,9 +1,13 @@
 "use strict";
 
 var fs = require('fs');
+var crypto = require('crypto');
+
+var hasher = crypto.createHash('sha1');
 
 module.exports = {
-    loadQuestions: loadQuestions
+    loadQuestions: loadQuestions,
+    saveAnswer: saveAnswer
 };
 
 function loadQuestions(fileName, callback) {
@@ -18,5 +22,15 @@ function loadQuestions(fileName, callback) {
             }
         }
         callback(JSON.parse(data.toString()));
+    });
+}
+
+function saveAnswer(answers, field, callback) {
+    var fileName = hasher.update(answers.student + field).digest('hex');
+    fs.writeFile(__dirname + '/answers/' + fileName + '.json', JSON.stringify(answers), function(err) {
+        if(err) {
+            throw err;
+        }
+        callback();
     });
 }

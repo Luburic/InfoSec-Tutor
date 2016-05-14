@@ -8,6 +8,9 @@
 <p>
 	In this section we focus on block ciphers. Perhaps in the future someone will add stream cipher lessons. Perhaps that someone will be you?
 </p>
+<h3>
+	Block cipher
+</h3>
 <p>
 	A block cipher consists of two paired algorithms, one for encryption, <it-math>E</it-math> and the other for decryption, <it-math>D</it-math>. Both algorithms accept two inputs, an input block of size <it-math>n</it-math> bits and a key of size <it-math>k</it-math> bits, where both algorithms yield an <it-math>n</it-math>-bit output block. The decryption algorithm <it-math>D</it-math> is defined to be the inverse function of encryption, <it-math>D = E^{-1}</it-math>. There are two primitive operations with which strong encryption algorithms can be built:
 </p>
@@ -23,6 +26,143 @@
 		<figure>
 			<img src="./assets/images/course/cryptography/sym/block.png">
 			<figcaption>Fig. 1 Block cipher avalanche effect</figcaption>
+		</figure>
+	</span>
+</div>
+<h3>
+	Block Cipher Modes of Operation
+</h3>
+<p>
+	To apply a block cipher in different applications, originally, five "modes of operation" have been defined by National Institute of Standards and Technology (NIST). So, what are these modes of operation for? Well, a mode of operation is a technique for enhancing the effect of a cryptographic algorithm or adapting the algorithm for an application, such as applying a block cipher to a sequence of data blocks of a data stream.
+	Five modes of operaition are:<br />
+	<ol>
+		<li>
+			Electronic Codebook (ECB)
+		</li>
+		<li>
+			Cipher Block Chaining (CBC)
+		</li>
+		<li>
+			Cipher Feedback (CFB)
+		</li>
+		<li>
+			Output Feedback (OFB)
+		</li>
+		<li>
+			Counter (CTR)
+		</li>
+	</ol>
+	We will describe all of them in further text.
+</p>
+<h4>
+	Electronic Codebook Mode (ECB)
+</h4>
+<p>
+	The simplest mode is the electronic codebook mode (ECB). Plaintext is handled one block at a time and each block of plaintext is encrypted using the same key (figure 2).
+	For a message longer than b bits, the procedure is simply to break the message into b-bit blocks, padding the last block if necessary.
+	Decryption is performed one block at a time, always using the same key.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/sym/ecb.png">
+			<figcaption>Fig. 2 Electronic Codebook Mode (ECB) (image <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Electronic_Codebook_.28ECB.29" target="_blank">Wiki</a>)</figcaption>
+		</figure>
+	</span>
+</div>
+<p>
+	The most important characteristic and big problem of ECB is that the same b-bit block of plaintext, if it appears more than once in the message, always produces the same ciphertext.
+</p>
+<h4>
+	Cipher Block Chaining Mode (CBC)
+</h4>
+<p>
+	In Cipher Block Chaining Mode (CBC), each ciphertext block is XORed with the next plaintext block, before encrypted with the key. The same key is used for each block. To produce the first block of ciphertext, an initialization vector (IV) is XORed with the first block of plaintext.
+	On decryption, the IV is XORed with the output of the decryption algorithm to recover the first block of plaintext. The IV is a data block that is the same size as the cipher block.
+	Both sender and receiver have to know the IV. CBC is depicted in figure 3.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/sym/cbc.png">
+			<figcaption>Fig. 3 	Cipher Block Chaining Mode (CBC) (image <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_.28CBC.29" target="_blank">Wiki</a>)</figcaption>
+		</figure>
+	</span>
+</div>
+<p>
+	Its main drawbacks are that encryption is sequential (i.e., it cannot be parallelized), and that the message must be padded to a multiple of the cipher block size. One way to handle this last issue is through the method known as ciphertext stealing.
+	Notice that, if a plaintext block is changed in this mode, then all subsequent cipherblocks will be affected. This property means that CBC mode is useful for purposes of authentication.
+</p>
+<h4>
+	Cipher Feedback (CFB)
+</h4>
+<p>
+	Figure 4 depicts the Cipher Feedback (CFB) . In the figure, it is assumed that the unit of transmission is <it-math>s</it-math> bits; a
+	common value is <it-math>s=8</it-math>. As with CBC, the units of plaintext are chained together, so that the ciphertext of any plaintext unit is a function of all the preceding plaintext.
+	In this case, rather than units of <it-math>b</it-math> bits, the plaintext is divided into segments of <it-math>s</it-math> bits.
+	For encryption. The input to the encryption function is a <it-math>b</it-math>-bit shift register that is initially set to some initialization vector (IV). The leftmost (most significant) <it-math>s</it-math> bits of the output of the encryption
+	function are XORed with the first segment of plaintext to produce the first unit of ciphertext, which
+	is then transmitted. In addition, the contents of the shift register are shifted left by <it-math>s</it-math> bits and ciphertext is
+	placed in the rightmost (least significant) <it-math>s</it-math> bits of the shift register. This process continues until all plaintext units have been encrypted.
+	For decryption, the same scheme is used, except that the received ciphertext unit is XORed with the
+	output of the encryption function to produce the plaintext unit. Note that it is the <b>encryption</b> function
+	that is used, not the decryption function.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/sym/cfb.png">
+			<figcaption>Fig. 4 	Cipher Feedback (CFB) (image <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Feedback_.28CFB.29" target="_blank">Wiki</a>)</figcaption>
+		</figure>
+	</span>
+</div>
+<p>
+	Like CBC mode, changes in the plaintext propagate forever in the ciphertext, and encryption cannot be parallelized. Also like CBC, decryption can be parallelized.
+</p>
+<h4>
+	Output Feedback (OFB)
+</h4>
+<p>
+	The output feedback (OFB) mode is similar in structure to that of CFB, as illustrated in Figure 5. As
+	can be seen, it is the output of the encryption function that is fed back to the shift register in OFB,
+	whereas in CFB the ciphertext unit is fed back to the shift register.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/sym/ofb.png">
+			<figcaption>Fig. 5 	Output Feedback (OFB) (image <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Output_Feedback_.28OFB.29" target="_blank">Wiki</a>)</figcaption>
+		</figure>
+	</span>
+</div>
+<p>
+	One advantage of the OFB method is that bit errors in transmission do not propagate. For example, if a
+	bit error occurs in ciphertext block C1 only the recovered value of is plaintext block P1 affected; subsequent plaintext units are not
+	corrupted. With CFB, C1 also serves as input to the shift register and therefore causes additional
+	corruption downstream.
+	The disadvantage of OFB is that it is more vulnerable to a message stream modification attack than is
+	CFB. Consider that complementing a bit in the ciphertext complements the corresponding bit in the
+	recovered plaintext. Thus, controlled changes to the recovered plaintext can be made. This may make it
+	possible for an opponent, by making the necessary changes to the checksum portion of the message as
+	well as to the data portion, to alter the ciphertext in such a way that it is not detected by an error-correcting code.
+</p>
+<h4>
+	Counter (CTR)
+</h4>
+<p>
+	Figure 6 depicts the CTR mode. A counter, equal to the plaintext block size is used. The only
+	requirement is that the counter value must be different for each plaintext block
+	that is encrypted. Typically, the counter is initialized to some value and then incremented by 1 for each
+	subsequent block (modulo <it-math>2^b</it-math> where <it-math>b</it-math> is the block size). For encryption, the counter is encrypted and
+	then XORed with the plaintext block to produce the ciphertext block; there is no chaining. For
+	decryption, the same sequence of counter values is used, with each encrypted counter XORed with a
+	ciphertext block to recover the corresponding plaintext block. Note that the <i>nonce</i> in this diagram is equivalent to the initialization vector (IV) in the other diagrams.
+</p>
+<div layout="row">
+	<span flex class="center-text">
+		<figure>
+			<img src="./assets/images/course/cryptography/sym/ctr.png">
+			<figcaption>Fig. 6 	Counter (CTR) (image <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_.28CTR.29" target="_blank">Wiki</a>)</figcaption>
 		</figure>
 	</span>
 </div>

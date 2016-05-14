@@ -1,0 +1,214 @@
+<h3>
+  Intro
+</h3>
+<p>
+  The AES is a key-iterated block cipher which means that it consists of the repeated application of a round transformation on the state.
+  The number of rounds is denoted by <it-math>N_r</it-math> and depends on the block length and the key length (<it-math>N_r=10</it-math> if the key length is 128 bits; <it-math>N_r=12</it-math> if the key length is 192 bits; and <it-math>N_r=14</it-math> if the key length is 256 bits).
+</p>
+<h3>
+  Encryption
+</h3>
+<p>
+  At a high level, encryption algorithm proceeds as follows:<br />
+  <ol>
+    <li>
+      Given a plaintext <it-math>x</it-math>, initialize State to be <it-math>x</it-math> and perform an operation <code>AddRoundKey</code>, which <code>XOR</code>s the <b>RoundKey</b> with <b>State</b>.
+    </li>
+    <li>
+      For each of the first <it-math>N_r-1</it-math> rounds, perform a substitution operation called <code>SubBytes</code> on <b>State</b> using an <b>S-box</b>; perform a permutation <code>ShiftRows</code> on <b>State</b>; perform an operation <code>MixColumns</code> on <b>State</b>; and perform <code>AddRoundKey</code>.
+    </li>
+    <li>
+      In final round perform <code>SubBytes</code>; perform <code>ShiftRows</code>; and perform <code>AddRoundKey</code>.
+    </li>
+    <li>
+      Define the ciphertext <it-math>y</it-math> to be <b>State</b>.
+    </li>
+  </ol>
+</p>
+<h4>
+  State
+</h4>
+<p>
+  The AES algorithm’s operations are performed on a two-dimensional array of bytes called the <b>State</b>. The State consists of four rows of bytes, each containing <it-math>N_b</it-math> bytes, where <it-math>N_b</it-math> is the block length divided by 32 (for AES <it-math>N_b=4</it-math>). In the State array denoted by the symbol <it-math>s</it-math>, each individual byte has two indices, with its row number <it-math>r</it-math> in the range <it-math>0 \leq r &lt; 4</it-math> and its column number <it-math>c</it-math> in the range <it-math>0 \leq c &lt; N_b</it-math>. At the start of the encipherment and decipherment the input – the array of bytes <it-math>in_0, in_1, … in_15</it-math> – is copied into the State array as illustrated in fig. 1. The encipherment and decipherment operations are then conducted on this State array, after which its final value is copied to the output – the array of bytes <it-math>out_0, out_1, … out_15</it-math>.
+</p>
+<div layout="row">
+  <span flex class="center-text">
+    <figure>
+      <img src="./assets/images/course/cryptography/aes/aes-state.jpg">
+      <figcaption>Fig. 1 State array input and output</figcaption>
+    </figure>
+  </span>
+</div>
+<p>
+  Hence, the input array, in, is copied to the State array according to the scheme:
+</p>
+<div layout="row">
+   <span flex-offset="40" class="center-text"><it-math>s[r,c] = in[r+4\cdot c]\ </it-math></span> for <it-math>\ 0 \leq r &lt; 4\ </it-math> and <it-math>\ 0 \leq c &lt; N_b</it-math>,
+</div>
+<p>
+  And at the end, the State is copied to the output array out as follows:
+</p>
+<div layout="row">
+   <span flex-offset="40" class="center-text"><it-math>out[r+4\cdot c] = s[r,c]\ </it-math></span> for <it-math>\ 0 \leq r &lt; 4\ </it-math> and <it-math>\ 0 \leq c &lt; N_b</it-math>.
+</div>
+<p>
+  The four bytes in each column of the State array form 32-bit words, where the row number <it-math>r</it-math> provides an index for the four bytes within each word. The state can hence be interpreted as a one-dimensional array of 32-bit words (columns), <it-math>w_0...w_3</it-math>, where the column number <it-math>c</it-math> provides an index into this array.
+</p>
+<h4>
+  SubBytes
+</h4>
+<p>
+  SubBytes transformation is a non-linear byte substitution that operates independently on each byte of the State using a substitution table (S-box) which is depicted in figure 2.
+  <div layout="row">
+    <span flex class="center-text">
+      <figure>
+        <img src="./assets/images/course/cryptography/aes/aes-subbytes.jpg">
+        <figcaption>Fig. 2 SubBytes applies the S-box to each byte of the State</figcaption>
+      </figure>
+    </span>
+  </div>
+  This is the only non-linear transformation in the algorithm. The S-box, which is invertible, is constructed by composing two transformations:
+<ol>
+  <li>
+    Take the multiplicative inverse in the finite field <it-math>GF(2^8)</it-math>; the element {<code>00</code>} is mapped to itself.
+  </li>
+  <li>
+    Apply the following affine transformation (over <it-math>GF(2)</it-math>):<br /><br />
+    <div layout="row">
+       <span flex-offset="40" class="center-text"><it-math>b'_i = b_i \bigoplus b_{(i+4) mod 8} \bigoplus b_{(i+5) mod 8} \bigoplus b_{(i+6) mod 8} \bigoplus b_{(i+7) mod 8} \bigoplus c_i</it-math></span>,
+    </div>
+  </li>
+</ol>
+<p>
+  for <it-math>0 \leq i &lt; 8</it-math>, where <it-math>b_i</it-math> is the <it-math>i^{th}</it-math> bit of the byte, and <it-math>c_i</it-math> is the <it-math>i^{th}</it-math> bit of a byte <it-math>c</it-math> with the value {<code>63</code>} or {<code>01100011</code>} (first hexadecimal number denotes the first four bits, and second hexadecimal number denotes the following four bits).
+  Here, a prime on a variable (e.g., <it-math>b'</it-math>) indicates that the variable is to be updated with the value on the right. In the matrix form, the affine transformation element of the S-box can be expressed as in fig. 3.
+</p>
+<div layout="row">
+  <span flex class="center-text">
+    <figure>
+      <img src="./assets/images/course/cryptography/aes/aes-sbox.jpg">
+      <figcaption>Fig. 3 Affine transformation element of the S-box</figcaption>
+    </figure>
+  </span>
+</div>
+</p>
+<h4>
+  ShiftRows
+</h4>
+<p>
+  In the ShiftRows transformation (fig. 4), the bytes in the last three rows of the State are cyclically shifted over different numbers of bytes (offsets). The first row, <it-math>r=0</it-math>, is not shifted. The ShiftRows transformation proceeds as follows<br />
+  <div layout="row">
+     <span flex-offset="40" class="center-text"><it-math>s'_{r,c} = s_{r,(c+shift(r,N_b)) mod N_b}\ </it-math></span> for <it-math>\ 0 &lt; r &lt; 4\ </it-math> and <it-math>\ 0 \leq c &lt; N_b</it-math>,
+  </div>
+  <p>
+    where the shift value <it-math>shift(r, N_b)</it-math> depends on the row number, <it-math>r</it-math>, as follows:<br />
+  </p>
+  <div layout="row">
+     <span flex-offset="40" class="center-text"><it-math>shift(1, 4) = 1</it-math>; <it-math>shift(2, 4) = 2</it-math>; <it-math>shift(3, 4) = 3</it-math></span>,
+  </div>
+  <p>
+    This has the effect of moving bytes to “lower” positions in the row while the “lower” bytes wrap around into the “top” of the row.
+  </p>
+</p>
+<div layout="row">
+  <span flex class="center-text">
+    <figure>
+      <img src="./assets/images/course/cryptography/aes/aes-shiftrows.jpg">
+      <figcaption>Fig. 4 ShiftRows cyclically shifts the last three rows in the State</figcaption>
+    </figure>
+  </span>
+</div>
+<h4>
+  MixColumns
+</h4>
+<p>
+  The MixColumns transformation operates on the State column-by-column, treating each column as a four-term polynomial. The columns are considered as polynomials over <it-math>GF(2^8)</it-math> and multiplied modulo <it-math>x^4+1</it-math> with a fixed polynomial <it-math>a(x)</it-math>, given by
+</p>
+<div layout="row">
+   <span flex-offset="40" class="center-text"><it-math>a(x) = \left\{03\right\} x3 + \left\{01\right\} x2 + \left\{01\right\} x + \left\{02\right\}</it-math></span>
+</div>
+<p>
+  As shown on fig. 5, This can be written as a matrix multiplication <it-math>s'(x)=a(x)\bigotimes s(x)</it-math>.
+</p>
+<div layout="row">
+  <span flex class="center-text">
+    <figure>
+      <img src="./assets/images/course/cryptography/aes/aes-mixcolumnsmatrix.jpg">
+      <figcaption>Fig. 5 Matrix multiplication of columns presented as polynomials</figcaption>
+    </figure>
+  </span>
+</div>
+<p>
+  As a result of this multiplication, the four bytes in a column are replaced by the following (multiplication in <it-math>GF(2^8)</it-math> is denoted by \bullet and corresponds to the multiplication of polynomials modulo an irreducible polynomial of degree 8 – for AES <it-math>x^8 + x^4 + x^3 + x + 1</it-math>):
+</p>
+<div layout="row">
+   <span flex-offset="40" class="center-text"><it-math>s'_{0,c}=(\left\{02\right\} \bullet s_{0,c})\bigoplus(\left\{03\right\} \bullet s_{1,c}) \bigoplus s_{2,c} \bigoplus s_{3,c}</it-math></span>
+</div>
+<div layout="row">
+   <span flex-offset="40" class="center-text"><it-math>s'_{1,c}=s_{0,c}\bigoplus(\left\{02\right\} \bullet s_{1,c})\bigoplus(\left\{03\right\} \bullet s_{2,c}) \bigoplus s_{3,c}</it-math></span>
+</div>
+<div layout="row">
+   <span flex-offset="40" class="center-text"><it-math>s'_{2,c}=s_{0,c}\bigoplus s_{1,c}\bigoplus(\left\{02\right\} \bullet s_{2,c})\bigoplus(\left\{03\right\} \bullet s_{3,c})</it-math></span>
+</div>
+<div layout="row">
+   <span flex-offset="40" class="center-text"><it-math>s'_{3,c}=(\left\{03\right\} \bullet s_{0,c})\bigoplus s_{1,c}\bigoplus s_{2,c}\bigoplus (\left\{02\right\} \bullet s_{3,c})</it-math></span>
+</div>
+<p>
+  Fig. 6 depicts the MixColumns transformation.
+</p>
+<div layout="row">
+  <span flex class="center-text">
+    <figure>
+      <img src="./assets/images/course/cryptography/aes/aes-mixcolumns.jpg">
+      <figcaption>Fig. 6 MixColumns operates on the State column-by-column</figcaption>
+    </figure>
+  </span>
+</div>
+<h4>
+  AddRoundKey
+</h4>
+<p>
+  In the AddRoundKey transformation, a RoundKey is added to the State by a simple bitwise XOR operation. Each RoundKey consists of <it-math>N_b</it-math> words from the key schedule which is described later in the paper. Those <it-math>N_b</it-math> words are each added to the columns of the State, such that:
+</p>
+<div layout="row">
+   <span flex-offset="40" class="center-text"><it-math>[s'_{0,c}, s'_{1,c}, s'_{2,c}, s'_{3,c}]=[s_{0,c}, s_{1,c}, s_{2,c}, s_{3,c}] \bigoplus [w_{round\cdot N_b+c}]</it-math></span>
+</div>
+<p>
+  for <it-math>0 \leq c &lt; N_b</it-math>, where <it-math>[w_i]</it-math> are the key schedule words and <it-math>round</it-math> is a value in the range <it-math>\ 0 \leq round \leq N_r</it-math>. In the encipherment process, the initial RoundKey addition occurs when <it-math>round=0</it-math>, prior to the first application of the round function. The application of the AddRoundKey transformation to the <it-math>N_r</it-math> rounds of the encipherment occurs when <it-math>\ 1 \leq round \leq N_r</it-math>. The action of this transformation is shown in fig. 7, where <it-math>\ l=round\cdot N_b</it-math>.
+</p>
+<div layout="row">
+  <span flex class="center-text">
+    <figure>
+      <img src="./assets/images/course/cryptography/aes/aes-addroundkey.jpg">
+      <figcaption>Fig. 7 AddRoundKey XORs each column of the State with a word from the key schedule</figcaption>
+    </figure>
+  </span>
+</div>
+<h4>
+  Key Expansion
+</h4>
+<p>
+  The AES algorithm takes the Cipher Key and performs a Key Expansion routine to generate a key schedule.
+  The Key Expansion generates a total of <it-math>N_b(N_r + 1)</it-math> words: the algorithm requires an initial set of <it-math>N_b</it-math> words, and each of the <it-math>N_r</it-math> rounds requires <it-math>N_b</it-math> words of key data. The resulting key schedule consists of a linear array of 4-byte words, denoted <it-math>[w_i]</it-math>, with <it-math>i</it-math> in the range <it-math>\ 0 \leq i &lt; N_b(N_r + 1)</it-math>.
+</p>
+<h3>
+  Decryption
+</h3>
+<p>
+  The encryption transformations can be inverted and then implemented in reverse order to produce a straightforward inverse encryption for the AES algorithm. The individual transformations used in the inverse process are <code>InvShiftRows</code>, <code>InvSubBytes</code>, <code>InvMixColumns</code> and <code>AddRoundKey</code>.
+  At a high level, decryption algorithm proceeds as follows:<br />
+  <ol>
+    <li>
+      Given a ciphertext <it-math>x</it-math>, initialize <b>State</b> to be <it-math>x</it-math> and perform an operation <code>AddRoundKey</code>, which <code>XOR</code>s the <b>RoundKey</b> with <b>State</b>.
+    </li>
+    <li>
+      For each of the <it-math>N_r-1</it-math> rounds in a reverse order, perform a permutation <code>InvShiftRows</code> on <b>State</b>; perform a substitution operation <code>InvSubBytes</code> on <b>State</b>; perform <code>AddRoundKey</code>; and perform an operation <code>InvMixColumns</code> on <b>State</b>.
+    </li>
+    <li>
+      In final round perform <code>InvShiftRows</code>; perform <code>InvSubBytes</code>; and perform <code>AddRoundKey</code>.
+    </li>
+    <li>
+      Define the plaintext <it-math>y</it-math> to be <b>State</b>.
+    </li>
+  </ol>
+</p>

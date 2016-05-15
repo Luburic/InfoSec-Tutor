@@ -5,8 +5,13 @@
 	<li><a href="https://en.wikipedia.org/wiki/Stream_cipher" target="_blank"><b>stream cipher</b></a> - encrypts bytes of a message one at a time;</li>
 	<li><a href="https://en.wikipedia.org/wiki/Block_cipher"><b>block cipher</b></a> - encrypts bytes of the plaintext in blocks, padding the plaintext so that it is a multiple of the block size if need be.</li>
 </ul>
+<h3>
+	Stream cipher
+</h3>
 <p>
-	In this section we focus on block ciphers. Perhaps in the future someone will add stream cipher lessons. Perhaps that someone will be you?
+	A stream cipher is a symmetric cipher which operates with a time-varying transformation on individual plaintext digits. In a stream cipher a sequence of plaintext digits, <it-math>p_1 p_2 ...</it-math>, is encrypted into a sequence of ciphertext digits <it-math>c_0 c_1 ...</it-math> as follows:<br />
+	a pseudorandom sequence <it-math>s_0 s_1 ...</it-math>, called the running-key or the keystream, is produced by a finite state automaton whose initial state is determined by a secret key.
+	The <it-math>i^{th}</it-math> keystream digit only depends on the secret key and on the <it-math>(i−1)</it-math> previous plaintext digits. Then, the <it-math>i^{th}</it-math> ciphertext digit is obtained by combining the <it-math>i^{th}</it-math> plaintext digit with the <it-math>i^{th}</it-math> keystream digit.
 </p>
 <h3>
 	Block cipher

@@ -1,6 +1,10 @@
 .gray-background {
 	background-color: #f8fff8;
 }
+
+.white-background {
+  background-color: #ffffff;
+}
 /*TODO: Smisliti boju pozadine, teksta, veličinu, font, itd. koji su najbolji za e-learning*/
 p {
   font-family: helvetica, sans-serif;

@@ -15,7 +15,7 @@
 						scope.review = response.data;
 						scope.answer = {};
 						scope.submit = function() {
-							$http.post("http://" + itConstants.hostAddress + ":" + itConstants.hostPort + "/api/review/" + attrs.review, scope.answer).then(function() {
+							$http.post(itConstants.api + "review/" + attrs.review, scope.answer).then(function() {
 								$state.go('main.overview');
 								$mdDialog.show(
 							      	$mdDialog.alert()

@@ -1,0 +1,70 @@
+<p>
+	In this section we'll take a look at some code snippets, benchmark results for a few datasets and you get to play with the AES algorithm for custom inputs.
+</p>
+<p>
+	Before we begin it should be noted that cryptographic algorithms have tested and secure implementations in most popular languages. This is why you will never find yourself needing to implement any of the algorithms mentioned here. With that in mind, most of the code you will see are simple API calls.
+</p>
+<h3>Demo</h3>
+<p>
+	In this demo section you can play around with AES decryption and encryption. You can supply a key of custom length, and it will be truncated/expanded if the key size isn't the appropriate length. By inserting custom input in the Encryption text area and clicking on the button the Decryption text area will be populated with the result (and vice versa). The AES algorithm presented here is running in ECB mode. Play around with it a bit. Try different inputs with different keys. Try encrypting two inputs with slight differences using the same key and see the difference in ciphertext.
+</p>
+<div layout="row">
+	<form name="vm.demoForm" flex>
+	<md-input-container class="md-block">
+		<label>Key</label>
+		<input type="text" ng-model="vm.submission.key" name="vm.demoForm.key" required>
+		<div ng-messages="vn.demoForm.key.$error">
+			<div ng-message="required" ng-show="vm.demoForm.key.$error.required">This field is required.</div>
+        </div>
+	</md-input-container>
+	<div layout="row" layout-wrap="">
+		<md-input-container flex="40" class="md-block">
+			<label>
+				Plaintext
+			</label>
+			<textarea class="scrollable" rows="6" ng-model="vm.submission.plaintext"></textarea>
+		</md-input-container>
+		<md-button ng-disabled="vm.demoForm.$untouched || vm.demoForm.$invalid || !vm.enableSubmission" class="md-raised md-primary" ng-click="vm.submit();">Encrypt/Decrypt</md-button>
+		<md-input-container flex="40" class="md-block">
+			<label>
+				Ciphertext
+			</label>
+			<textarea class="scrollable" rows="6" ng-model="vm.submission.ciphertext"></textarea>
+		</md-input-container>
+	</div>
+	<div flex="100">
+		<md-input-container class="md-block">
+			<label>
+				Console
+			</label>
+			<textarea class="scrollable console" ng-readonly="'true'" rows="10" ng-model="vm.console"></textarea>
+		</md-input-container>
+	</div>
+</div>
+<p>
+	Now that you've seen how it works let's take a look at the, rather simple, underlying code. As you can see from the code below, this node.js code loads the built-in crypto module. For encryption the createCipher method is used to get the algorithm passed as the first argument, supplied with the key passed as the second argument. We tell the algorithm to pad our input so as to make it a multiple of the block size (192 bits for AES in this case) and then we call update on the cipher for the given plaintext. The second and third argument are the formats of the input and output, respectively. We call the final method to output the last block, after which the cipher can't be used again unless it's recreated. As you can see, the underlying code is simply a method call, and very similar solutions can be found in Java, C++, Python and many other languages. If you take a look at the <a ui-sref="main.cryptography.symmetric-key.des.demo">DES algorithm code</a> you can see that the code is practically identical.
+</p>
+<pre>
+<code>
+var crypto = require("crypto");
+
+function encrypt(plaintext, key) {
+	var cipher = crypto.createCipher("aes192", key);
+	cipher.setAutoPadding(true);
+	var ciphertext = cipher.update(plaintext, 'utf8', 'hex');
+	ciphertext += cipher.final('hex');
+
+	return ciphertext;
+}
+
+function decrypt(ciphertext, key) {
+	var decipher = crypto.createDecipher("aes192", key);
+	decipher.setAutoPadding(true);
+	var plaintext = decipher.update(ciphertext, 'hex', 'utf8');
+	plaintext += decipher.final('utf8');
+
+	return plaintext;
+}
+</code>
+</pre>
+<h3>Benchmark</h3>

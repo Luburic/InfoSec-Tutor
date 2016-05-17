@@ -32,7 +32,9 @@
 			})
 			.state('main.cryptography.symmetric-key.aes.demo', {
 				url: '/demo',
-				templateUrl: 'app/components/cryptography/symmetric-key/aes/aes-demo.html'
+				templateUrl: 'app/components/cryptography/symmetric-key/aes/aes-demo.html',
+				controller: "AESDemoController",
+				controllerAs: "vm"
 			})
 			.state('main.cryptography.symmetric-key.aes.next', {
 				url: '/next',

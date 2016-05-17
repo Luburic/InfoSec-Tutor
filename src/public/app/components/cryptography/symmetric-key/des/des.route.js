@@ -32,7 +32,9 @@
 			})
 			.state('main.cryptography.symmetric-key.des.demo', {
 				url: '/demo',
-				templateUrl: 'app/components/cryptography/symmetric-key/des/des-demo.html'
+				templateUrl: 'app/components/cryptography/symmetric-key/des/des-demo.html',
+				controller: 'DESDemoController',
+				controllerAs: 'vm'
 			})
 			.state('main.cryptography.symmetric-key.des.next', {
 				url: '/next',

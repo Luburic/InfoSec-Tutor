@@ -32,3 +32,14 @@ p {
   overflow: hidden;
   position: relative;
 }
+
+.scrollable {
+  overflow-y: auto;
+  min-height: 150px !important;
+  max-height: 150px !important;
+}
+
+.console {
+  font-family: "monospace";
+  font-size: 12px;
+}

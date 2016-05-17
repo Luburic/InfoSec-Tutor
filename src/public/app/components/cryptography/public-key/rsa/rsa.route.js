@@ -36,7 +36,9 @@
 			})
 			.state('main.cryptography.public-key.rsa.demo', {
 				url: '/demo',
-				templateUrl: 'app/components/cryptography/public-key/rsa/rsa-demo.html'
+				templateUrl: 'app/components/cryptography/public-key/rsa/rsa-demo.html',
+				controller: 'RSADemoController',
+				controllerAs: 'vm'
 			})
 			.state('main.cryptography.public-key.rsa.next', {
 				url: '/next',

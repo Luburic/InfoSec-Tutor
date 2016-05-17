@@ -1,1 +1,119 @@
-rsa-demo
+<p>
+	In this section we'll take a look at some code snippets, benchmark results for a few datasets and you get to play with the RSA algorithm for custom inputs.
+</p>
+<p>
+	Before we begin it should be noted that cryptographic algorithms have tested and secure implementations in most popular languages. This is why you will never find yourself needing to implement any of the algorithms mentioned here. With that in mind, most of the code you will see are simple API calls.
+</p>
+<h3>Demo</h3>
+<p>
+	In this demo section you can play around with RSA decryption, encryption, digital signing and veryfing digital signatures. By inserting custom input in the Plaintext area and clicking on the button the Ciphertext area will be populated with the result (and vice versa). The same goes for digital signing and verifying. Play around with it a bit. Try different inputs with different keys. Try encrypting two inputs with slight differences using the same key and see the difference in ciphertext.
+</p>
+<div layout="row">
+	<form name="vm.demoForm" flex>
+	<div layout="row" layout-wrap="">
+	<pre flex="40">
+	<md-input-container class="md-block">
+		<label>
+			Public key
+		</label>
+		<textarea class="scrollable console" rows="6" ng-model="vm.submission.publicKey"></textarea>
+	</md-input-container>
+	</pre>
+	<md-button ng-disabled="vm.demoForm.$untouched || vm.demoForm.$invalid || !vm.enableSubmission" class="md-raised md-primary">Generate key pair</md-button>
+	<pre flex="40">
+	<md-input-container class="md-block">
+		<label>
+			Private key
+		</label>
+		<textarea class="scrollable console" rows="6" ng-model="vm.submission.privateKey"></textarea>
+	</md-input-container>
+	</pre>
+	</div>
+	<div layout="row" layout-wrap="">
+	<md-input-container flex="40" class="md-block">
+		<label>
+			Plaintext
+		</label>
+		<textarea class="scrollable" rows="6" ng-model="vm.submission.plaintext"></textarea>
+	</md-input-container>
+	<md-button ng-disabled="vm.demoForm.$untouched || vm.demoForm.$invalid || !vm.enableSubmission" class="md-raised md-primary" ng-click="vm.submitEncryption();">Encrypt/Decrypt</md-button>
+	<md-input-container flex="40" class="md-block">
+		<label>
+			Ciphertext
+		</label>
+		<textarea class="scrollable" rows="6" ng-model="vm.submission.ciphertext"></textarea>
+	</md-input-container>
+	</div>
+	<md-input-container class="md-block">
+		<label>
+			Console
+		</label>
+		<textarea class="scrollable console" ng-readonly="'true'" rows="10" ng-model="vm.console"></textarea>
+	</md-input-container>
+	<p>
+		Now that you've seen how it works let's take a look at the, rather simple, underlying code. As you can see from the code below, this node.js code loads the built-in crypto module. For encryption the publicEncrypt method is used to do RSA encryption on the second argument, using the public key or X.509 certificate passed as the first argument. The decryption function applies decryption on the second argument using the private key passed as the first argument. As you can see, the underlying code is simply a method call, and very similar solutions can be found in Java, C++, Python and many other languages.
+	</p>
+	<pre>
+	<code>
+	var crypto = require("crypto");
+
+	function encrypt(plaintext, publicKey) {
+		var ciphertext = crypto.publicEncrypt(publicKey, new Buffer(plaintext, 'utf8'));
+
+		return ciphertext;
+	}
+
+	function decrypt(ciphertext, privateKey) {
+		var plaintext = crypto.privateDecrypt(privateKey, ciphertext).toString('utf8');
+
+		return plaintext;
+	}
+	</code>
+	</pre>
+	<div layout="row" layout-wrap="">
+	<md-input-container flex="40" class="md-block">
+		<label>
+			Text
+		</label>
+		<textarea class="scrollable" rows="6" ng-model="vm.submission.text"></textarea>
+	</md-input-container>
+	<div flex="20" layout="row" layout-wrap>
+		<md-button flex="100" ng-disabled="vm.demoForm.$untouched || vm.demoForm.$invalid || !vm.enableSubmission" class="md-raised md-primary" ng-click="vm.submitSignature();">Sign</md-button>
+		<md-button flex="100" ng-disabled="vm.demoForm.$untouched || vm.demoForm.$invalid || !vm.enableSubmission" class="md-raised md-primary" ng-click="vm.submitVerification();">Verify</md-button>
+	</div>
+	<md-input-container flex="40" class="md-block">
+		<label>
+			Signed text
+		</label>
+		<textarea class="scrollable" rows="6" ng-model="vm.submission.signature"></textarea>
+	</md-input-container>
+	</div>
+	<p>Signature verified? {{vm.submission.verified}}</p>
+	<md-input-container flex="100" class="md-block">
+		<label>
+			Console
+		</label>
+		<textarea class="scrollable console" ng-readonly="'true'" rows="10" ng-model="vm.console"></textarea>
+	</md-input-container>
+	<p>
+		Now that you've seen how it works let's take a look at the, rather simple, underlying code. As you can see from the code below, this node.js code loads the built-in crypto module. We initialize the Sign object with the encryption algorithm (RSA) that will be used to sign the hash (created with SHA256 in this case) of the input text. We sign the text with our private key, so that anyone can verify the signature by using our public key.
+	</p>
+	<pre>
+	<code>
+	var crypto = require("crypto");
+
+	function sign(text, privateKey) {
+		var sign = crypto.createSign('RSA-SHA256');
+		sign.update(text);
+		return sign.sign(privateKey, 'hex');
+	}
+
+	function verify(signature, publicKey, text) {
+		var verify = crypto.createVerify('RSA-SHA256');
+		verify.update(text);
+		return verify.verify(publicKey, signature, 'hex');
+	}
+	</code>
+	</pre>
+</div>
+<h3>Benchmark</h3>

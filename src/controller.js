@@ -28,6 +28,6 @@ function reviewSubmit(req, res) {
 
 function demo(req, res) {
 	var algorithm = require('./crypto/' + req.params.algorithm + '.js');
-	var response = algorithm.response(req.query.text, req.query.key, req.query.mode);
+	var response = algorithm.response(req.query.text, req.query.key, req.query.mode, req.query.sign);
 	res.status(200).json(response);
 }

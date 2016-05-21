@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public'));
 
-app.get("/api/review/:review", controller.review);
-app.post("/api/review/:review", controller.reviewSubmit);
+app.get("/api/quiz/:quiz", controller.quiz);
+app.post("/api/quiz/:quiz", controller.quizSubmit);
 
 app.get("/api/demo/:algorithm", controller.demo);
 

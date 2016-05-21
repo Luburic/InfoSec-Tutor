@@ -1,14 +1,14 @@
-<form name="reviewForm" ng-if="review && review.length != 0">
+<form name="quizForm" ng-if="quiz && quiz.length != 0">
 	<md-input-container class="md-block">
 		<label>
 			Enter your name, surname, and student index.
 		</label>
 		<input type="text" ng-model="answer['student']" required name="student">
-		<div ng-messages="reviewForm.student.$error">
-			<div ng-message="required" ng-show="reviewForm.student.$error.required">This field is required.</div>
+		<div ng-messages="quizForm.student.$error">
+			<div ng-message="required" ng-show="quizForm.student.$error.required">This field is required.</div>
         </div>
 	</md-input-container>
-	<div ng-repeat="r in review track by $index">
+	<div ng-repeat="r in quiz track by $index">
 		<div ng-if="r.type != 'checkbox'">
 			<br><br>
 			<md-input-container class="md-block">
@@ -31,8 +31,8 @@
 			<br><br>
 		</div>
 	</div>
-	<md-button ng-disabled="reviewForm.$untouched || reviewForm.$invalid" class="md-raised md-primary" ng-click="submit();">Submit</md-button>
+	<md-button ng-disabled="quizForm.$untouched || quizForm.$invalid" class="md-raised md-primary" ng-click="submit();">Submit</md-button>
 </form>
-<div  ng-if="!review || review.length == 0">
+<div  ng-if="!quiz || quiz.length == 0">
 	There is currently no test for this section.
 </div>

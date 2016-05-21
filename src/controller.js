@@ -3,14 +3,14 @@
 var model = require("./model.js");
 
 module.exports = {
-	review: review,
-	reviewSubmit: reviewSubmit,
+	quiz: quiz,
+	quizSubmit: quizSubmit,
 
 	demo: demo
 };
 
-function review(req, res) {
-	model.loadQuestions(req.params.review, function(questions) {
+function quiz(req, res) {
+	model.loadQuestions(req.params.quiz, function(questions) {
 		var status = 200;
 		if(questions.length === 0) {
 			status = 404;
@@ -20,8 +20,8 @@ function review(req, res) {
 	});
 }
 
-function reviewSubmit(req, res) {
-	model.saveAnswer(req.body, req.params.review, function() {
+function quizSubmit(req, res) {
+	model.saveAnswer(req.body, req.params.quiz, function() {
 		res.status(200).json({});
 	});
 }

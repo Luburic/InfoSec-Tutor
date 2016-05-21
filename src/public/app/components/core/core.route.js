@@ -20,9 +20,9 @@
 				url: '/home',
 				templateUrl: 'app/components/core/home.html'
 			})
-			.state('main.review', {
-				url: '/review',
-				template: '<it-review review="test"></it-review>'
+			.state('main.quiz', {
+				url: '/quiz',
+				template: '<it-quiz quiz="test"></it-quiz>'
 			})
 			.state('main.about', {
 				url: '/about',

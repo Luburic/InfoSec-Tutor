@@ -58,9 +58,9 @@
         });
 
         sections.push({
-          name: 'Review',
+          name: 'Quiz',
           type: 'link',
-          state: 'main.review'
+          state: 'main.quiz'
         });
 
         sections.push({
@@ -81,5 +81,5 @@
           }
         };
       }]);
-      
+
 })();

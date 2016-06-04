@@ -5,18 +5,6 @@
 	"answers":["It uses initialization vector to produce the first block of ciphertext", "If the same b-bit block of plaintext appears more than once, always produces the same ciphertext", "Decryption is performed one block at a time, always using the same key", "Padding the last incomplete block of the message is necessary"]
 },
 {
-	"id":"2",
-	"type":"checkbox",
-	"question":"Which of the following operations are non-linear transformations in AES (Choose all that apply):",
-	"answers":["ShiftRows", "MixColumns", "AddRoundKey", "SubBytes"]
-},
-{
-	"id":"3",
-	"type":"checkbox",
-	"question":"Which of the following operations are not executed in the final round of the AES algorithm (Choose all that apply):",
-	"answers":["ShiftRows", "MixColumns", "AddRoundKey", "SubBytes"]
-},
-{
 	"id":"4",
 	"type":"textArea",
 	"question":"Alice and Bob established encrypted communication, but you are the evil man who is watching their messages. Suddenly, you notice identical prefixes (which are always a multiple of 16 bytes) of many of the ciphertexts. However, the ciphertexts that follow that prefixes are always different. What cipher and what mode of operation do Alice and Bob use and what are they doing wrong?"
@@ -31,5 +19,17 @@
 	"type":"checkbox",
 	"question":"Which of the following DES modes is typically used when small amounts of data are encrypted, such as in ATM PIN numbers:",
 	"answers":["OFB", "ECB", "CFB", "CBC", "CTR"]
+},
+{
+	"id":"2",
+	"type":"checkbox",
+	"question":"Which of the following operations are non-linear transformations in AES (Choose all that apply):",
+	"answers":["ShiftRows", "MixColumns", "AddRoundKey", "SubBytes"]
+},
+{
+	"id":"3",
+	"type":"checkbox",
+	"question":"Which of the following operations are not executed in the final round of the AES algorithm (Choose all that apply):",
+	"answers":["ShiftRows", "MixColumns", "AddRoundKey", "SubBytes"]
 }
 ]
